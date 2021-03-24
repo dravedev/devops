@@ -1,0 +1,27 @@
+---
+- name: "Création d'un utilisateur"
+  hosts: all
+  become: True
+  tasks:
+    - name: blabla
+      include_role:
+        name: nickjj.user
+      loop: "{{admins}}"
+      vars:
+        user_name: "{{item}}"
+
+# tasks file for ansible-dravedev-developers-ssh
+- name: Set up multiple authorized keys
+  hosts: all
+  #become: yes
+  tags:
+    - public_keys
+  tasks:
+    - name: blabla2
+      become: yes
+      #become_user: "{{item}}"
+      authorized_key:
+        user: "{{item}}"
+        state: present
+        key: "https://github.com/{{item}}.keys"
+      loop: "{{admins}}"
