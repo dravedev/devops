@@ -1,9 +1,9 @@
 ---
-- name: "Création d'un utilisateur"
+- name: "Création des utilisateurs"
   hosts: all
   become: True
   tasks:
-    - name: blabla
+    - name: Utilisation du role nickjj.user
       include_role:
         name: nickjj.user
       loop: "{{admins}}"
@@ -17,7 +17,7 @@
   tags:
     - public_keys
   tasks:
-    - name: blabla2
+    - name: Ajout des utilisateurs
       become: yes
       #become_user: "{{item}}"
       authorized_key:
@@ -25,3 +25,30 @@
         state: present
         key: "https://github.com/{{item}}.keys"
       loop: "{{admins}}"
+
+# Configuration du pare-feu
+- name: Pare-feu
+  hosts: all
+  become: True
+  tasks:
+    - name: Utilisation du role weareinteractive.ufw
+      include_role:
+        name: weareinteractive.ufw
+      loop: "{{ports}}"
+      vars:
+        to_port: "{{item}}"
+
+- name: Ouverture des ports
+  hosts: all
+  #become: yes
+  tags:
+    - pare-feu
+  tasks:
+    - name: blabla
+      become: yes
+      ufw_rules:
+      - rule: allow
+        to_port: "{{item}}"
+        protocol: tcp
+        comment: 'ouverture du port "{{item}}"'
+      loop: "{{ports}}"

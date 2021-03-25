@@ -1,2 +1,5 @@
+# ansible-galaxy install -p roles/ -r roles/requirements.yml
 - src: RocketChat.Server
   version: v2.2.2
+- src: weareinteractive.ufw
+  version: v2.0.1

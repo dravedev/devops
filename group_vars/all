@@ -7,3 +7,8 @@ admins:
   - jvtrudel
   - mathben
   - Thibou2Chou
+
+ports:
+  - 22
+  - 80
+  - 443
