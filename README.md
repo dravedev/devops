@@ -10,12 +10,13 @@
 - [nickjj.user](https://galaxy.ansible.com/nickjj/user) et [geerlingguy.docker](https://galaxy.ansible.com/geerlingguy/docker)
 
 ### Variables :
-Éditer group_vars/all
+Éditer [group_vars/all](group_vars/all)
 
 ### Démarrer l'installation :
-ansible-playbook -i inventory.ini playbook.yml
+```ansible-playbook -i inventory.ini playbook.yml```
 
 ### Démarrer à un endroit précis du playbook :
 Utiliser le nom d'un "tags:" présent dans playbook.yml
 
-exemple : ansible-playbook -i inventory.ini -t install-docker playbook.yml
+exemple : 
+```ansible-playbook -i inventory.ini -t install-docker playbook.yml```
