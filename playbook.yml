@@ -1,5 +1,5 @@
 ---
-- name: "Création d'un utilisateur"
+- name: Création des administrateurs
   hosts: all
   become: True
   tasks:
@@ -9,15 +9,12 @@
       vars:
         user_name: "{{item}}"
 
-# tasks file for ansible-dravedev-developers-ssh
-- name: Set up multiple authorized keys
+- name: Importation des clés des administrateurs
   hosts: all
-  #become: yes
   tags:
     - public_keys
   tasks:
     - become: yes
-      #become_user: "{{item}}"
       authorized_key:
         user: "{{item}}"
         state: present
