@@ -16,5 +16,6 @@
 ansible-playbook -i inventory.ini playbook.yml
 
 ### Démarrer à un endroit précis du playbook :
-Utiliser le nom d'un "tags:" présent dans playbook.yml.
+Utiliser le nom d'un "tags:" présent dans playbook.yml
+
 exemple : ansible-playbook -i inventory.ini -t install-docker playbook.yml
