@@ -3,8 +3,7 @@
   hosts: all
   become: True
   tasks:
-    - name: blabla
-      include_role:
+    - include_role:
         name: nickjj.user
       loop: "{{admins}}"
       vars:
@@ -17,8 +16,7 @@
   tags:
     - public_keys
   tasks:
-    - name: blabla2
-      become: yes
+    - become: yes
       #become_user: "{{item}}"
       authorized_key:
         user: "{{item}}"
