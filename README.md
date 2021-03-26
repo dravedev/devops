@@ -2,7 +2,7 @@
 
 ### Ce que ça fait :
 - Crée les comptes des administrateurs via une liste dans une variable (sudoer sans mot de passe à fournir)
-- Importe et associe à leurs comptes leurs clés publique SSH via GitHub
+- Importe les clés publiques SSH des administrateurs via GitHub puis les associe aux comptes des administrateurs
 - Installe Docker et docker-compose
 
 ### Prérequis :
@@ -18,5 +18,4 @@
 ### Démarrer à un endroit précis du playbook :
 Utiliser le nom d'un "tags:" présent dans playbook.yml
 
-exemple : 
-```ansible-playbook -i inventory.ini -t install-docker playbook.yml```
+exemple : ```ansible-playbook -i inventory.ini -t install-docker playbook.yml```
