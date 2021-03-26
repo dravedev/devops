@@ -7,7 +7,7 @@
 
 ### Prérequis :
 - [Ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html)
-- [nickjj.user](https://galaxy.ansible.com/nickjj/user) et [geerlingguy.docker](https://galaxy.ansible.com/geerlingguy/docker)
+- [nickjj.user](https://galaxy.ansible.com/nickjj/user), [geerlingguy.docker](https://galaxy.ansible.com/geerlingguy/docker) et [ypsman.hostname](https://galaxy.ansible.com/ypsman/hostname)
 
 ### Variables :
 Éditer [group_vars/all](group_vars/all)

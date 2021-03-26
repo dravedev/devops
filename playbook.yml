@@ -31,3 +31,12 @@
   tasks:
     - include_role:
         name: geerlingguy.docker
+
+- name: Configuration du hostname du serveur
+  hosts: all
+  become: yes
+  tags:
+    - config-hostname
+  tasks:
+    - include_role:
+        name: ypsman.hostname
