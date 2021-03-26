@@ -23,3 +23,14 @@
         state: present
         key: "https://github.com/{{item}}.keys"
       loop: "{{admins}}"
+
+- name: Installation de Docker et docker-compose
+  hosts: all
+  become: yes
+  vars:
+    docker_install_compose: true
+  tags:
+    - install-docker
+  tasks:
+    - include_role:
+        name: geerlingguy.docker
