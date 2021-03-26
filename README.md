@@ -1,4 +1,4 @@
-# Playbook Ansible d'initiation de serveurs
+## Playbook Ansible d'initialisation de serveurs
 
 ### Prérequis :
 - [Ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html)
