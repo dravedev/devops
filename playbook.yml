@@ -24,6 +24,9 @@
 - name: Installation de pip
   hosts: all
   become: yes
+  vars:
+    pip_package: python3-pip
+    pip_executable: pip3
   tags:
     - install-pip
   tasks:
