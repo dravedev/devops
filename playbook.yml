@@ -116,6 +116,5 @@
         mode: '0644'
     - name: Build et démarrage
       become: yes
-      become_exe: "sudo su - rocketchat"
-      become_method: su
+      become_user: rocketchat
       ansible.builtin.shell: docker-compose up -d
