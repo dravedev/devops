@@ -10,8 +10,10 @@
         update_cache: yes
         cache_valid_time: 3600
 
-- name: Création des administrateurs
+- name: Création des compte des administrateurs
   hosts: all
+  tags:
+    - admins
   become: True
   tasks:
     - include_role:
@@ -74,6 +76,17 @@
     - include_role:
         name: ypsman.hostname
 
+- name: Création du compte rocket.chat
+  hosts: all
+  become: yes
+  vars:
+    user_name: "rocketchat"
+  tags:
+    - install-rocketchat
+  tasks:
+    - include_role:
+        name: nickjj.user
+
 - name: Préparation de l'installation de rocket.chat
   hosts: all
   tags:
@@ -85,10 +98,24 @@
         path: /etc/hosts
         block: |
           127.0.0.1 {{adresse_rocketchat}}
-    - name: copie du docker-compose 
+    - name: Création des répertoires pour rocket.chat
+      become: yes
+      file:
+        path: /var/www/rocket.chat/data/runtime/db
+        state: directory
+      file:
+        path: /var/www/rocket.chat/data/dump
+        state: directory
+    - name: copie du docker-compose.yml
+      become: yes
       ansible.builtin.copy:
         src: ./docker-compose.yml
-        dest: ~/docker-compose.yml
-    - name: build et démarrage du dockercompose
+        dest: /home/rocketchat/docker-compose.yml
+        owner: rocketchat
+        group: rocketchat
+        mode: '0644'
+    - name: Build et démarrage
       become: yes
+      become_exe: "sudo su - rocketchat"
+      become_method: su
       ansible.builtin.shell: docker-compose up -d
