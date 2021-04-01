@@ -63,25 +63,21 @@
     - include_role:
         name: ypsman.hostname
 
-- name: ajout de l'adresse de rocket.chat dans /etc/hosts
+- name: Préparation de l'installation de rocket.chat
   hosts: all
-  become: yes
   tags:
-    - adresse-rocketchat
+    - install-rocketchat
   tasks:
-    - blockinfile:
+    - name: Ajout de l'adresse de rocket.chat dans /etc/hosts
+      become: yes
+      blockinfile:
         path: /etc/hosts
         block: |
           127.0.0.1 {{adresse_rocketchat}}
-
-- name: Démarrage du service rocket.chat
-  hosts: all
-  tags:
-    - copie-docker-compose.yml
-  tasks:
     - name: copie du docker-compose 
       ansible.builtin.copy:
         src: ./docker-compose.yml
         dest: ~/docker-compose.yml
     - name: build et démarrage du dockercompose
+      become: yes
       ansible.builtin.shell: docker-compose up -d
