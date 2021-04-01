@@ -1,4 +1,15 @@
 ---
+- name: apt upgrade
+  hosts: all
+  tags:
+    - apt_upgrade
+  become: true
+  tasks:
+    - apt:
+        upgrade: yes
+        update_cache: yes
+        cache_valid_time: 3600
+
 - name: Création des administrateurs
   hosts: all
   become: True
