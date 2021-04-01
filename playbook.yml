@@ -21,17 +21,17 @@
         key: "https://github.com/{{item}}.keys"
       loop: "{{admins}}"
 
-- name: Installation de pip
-  hosts: all
-  become: yes
-  vars:
-    pip_package: python3-pip
-    pip_executable: pip3
-  tags:
-    - install-pip
-  tasks:
-    - include_role:
-        name: geerlingguy.pip
+#- name: Installation de pip
+#  hosts: all
+#  become: yes
+#  vars:
+#    pip_package: python3-pip
+#    pip_executable: pip3
+#  tags:
+#    - install-pip
+#  tasks:
+#    - include_role:
+#        name: geerlingguy.pip
 
 - name: Installation de Docker et docker-compose
   hosts: all
