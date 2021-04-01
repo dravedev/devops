@@ -44,6 +44,16 @@
     - include_role:
         name: geerlingguy.docker
 
+#- name: Install docker-py
+#  hosts: all
+#  tags:
+#    - install-docker-python
+#  tasks:
+#    - pip:
+#        name: docker
+#        executable: pip3
+#      become: yes
+
 - name: Configuration du hostname du serveur
   hosts: all
   become: yes
@@ -52,3 +62,26 @@
   tasks:
     - include_role:
         name: ypsman.hostname
+
+- name: ajout de l'adresse de rocket.chat dans /etc/hosts
+  hosts: all
+  become: yes
+  tags:
+    - adresse-rocketchat
+  tasks:
+    - blockinfile:
+        path: /etc/hosts
+        block: |
+          127.0.0.1 {{adresse_rocketchat}}
+
+- name: Démarrage du service rocket.chat
+  hosts: all
+  tags:
+    - copie-docker-compose.yml
+  tasks:
+    - name: copie du docker-compose 
+      ansible.builtin.copy:
+        src: ./docker-compose.yml
+        dest: ~/docker-compose.yml
+    - name: build et démarrage du dockercompose
+      ansible.builtin.shell: docker-compose up -d
