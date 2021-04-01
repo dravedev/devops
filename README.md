@@ -13,9 +13,9 @@
 Éditer [group_vars/all](group_vars/all)
 
 ### Démarrer l'installation :
-```ansible-playbook -i inventory.ini playbook.yml```
+```ansible-playbook -i inventory.ini -u nom_utilisateur_github playbook.yml```
 
 ### Démarrer à un endroit précis du playbook :
 Utiliser le nom d'un "tags:" présent dans playbook.yml
 
-exemple : ```ansible-playbook -i inventory.ini -t install-docker playbook.yml```
+exemple : ```ansible-playbook -i inventory.ini -u nom_utilisateur_github -t install-docker playbook.yml```
