@@ -79,13 +79,22 @@
 - name: Création du compte rocket.chat
   hosts: all
   become: yes
-  vars:
-    user_name: "rocketchat"
+#  vars:
+#    user_name: "rocketchat"
   tags:
     - install-rocketchat
   tasks:
-    - include_role:
-        name: nickjj.user
+    - user:
+        name: rocketchat
+        #password: '???'
+        groups: # Empty by default, here we give it some groups
+          - docker
+          - sudo
+        state: present
+        shell: /bin/bash       # Defaults to /bin/bash
+        system: no             # Defaults to no
+        createhome: yes        # Defaults to yes
+        home: /home/rocketchat  # Defaults to /home/<username>
 
 - name: Préparation de l'installation de rocket.chat
   hosts: all
@@ -103,9 +112,15 @@
       file:
         path: /var/www/rocket.chat/data/runtime/db
         state: directory
+        owner: rocketchat
+        group: rocketchat
+        mode: '0644'
       file:
         path: /var/www/rocket.chat/data/dump
         state: directory
+        owner: rocketchat
+        group: rocketchat
+        mode: '0644'
     - name: copie du docker-compose.yml
       become: yes
       ansible.builtin.copy:
@@ -117,4 +132,5 @@
     - name: Build et démarrage
       become: yes
       become_user: rocketchat
-      ansible.builtin.shell: docker-compose up -d
+      #shell: whoami
+      ansible.builtin.shell: cd ~ ; docker-compose up -d
