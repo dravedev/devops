@@ -79,22 +79,20 @@
 - name: Création du compte rocket.chat
   hosts: all
   become: yes
-#  vars:
-#    user_name: "rocketchat"
   tags:
     - install-rocketchat
   tasks:
     - user:
         name: rocketchat
         #password: '???'
-        groups: # Empty by default, here we give it some groups
+        groups:
           - docker
           - sudo
         state: present
-        shell: /bin/bash       # Defaults to /bin/bash
-        system: no             # Defaults to no
-        createhome: yes        # Defaults to yes
-        home: /home/rocketchat  # Defaults to /home/<username>
+        shell: /bin/bash
+        system: no
+        createhome: yes
+        home: /home/rocketchat
 
 - name: Préparation de l'installation de rocket.chat
   hosts: all
@@ -132,5 +130,4 @@
     - name: Build et démarrage
       become: yes
       become_user: rocketchat
-      #shell: whoami
       ansible.builtin.shell: cd ~ ; docker-compose up -d
