@@ -3,7 +3,7 @@
 ## Usage
 
     # Installe les rôles externes
-    ansible-galaxy install -r roles/requirements.yml
+    ansible-galaxy install -r requirements.yml
 
 
     # Setup minimal sur une machine "neuve"
