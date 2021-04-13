@@ -1,0 +1,31 @@
+# playbook pour l'initialisation d'un serveur
+#   - installe un draveur
+
+
+- hosts: "{{ init_hosts }}"
+  become: true
+  gather_facts: "{{ do_gather_facts | default(false) }}"
+
+  tasks:
+
+    - name: Premier draveur
+      set_fact:
+        user: "{{ draveurs | selectattr('name','contains', draveur) | list |  json_query(\"[0]\") }}"
+      # todo: fail if user is not found
+
+    - name: mise à jour du système
+      apt:
+        update_cache: true
+
+    - include_role:
+        name: draveurs
+      vars:
+        action: system_config
+
+
+    - include_role:
+        name: draveurs
+      vars:
+        action: draveur
+        username: "{{ user.name }}"
+        github_username: "{{ user.github | default(user.name) }}"

@@ -1,0 +1,18 @@
+listen: 3210
+peers:
+{% for draveur in draveurs %}
+{% if (draveur.drave_subdomain is defined) and (draveur.vpncloud_port is defined) %}
+  - {{draveur.drave_subdomain}}.drave.dev:{{draveur.vpncloud_port}}
+{% endif %}
+{% endfor %}
+peer-timeout: 300
+switch-timeout: 300
+crypto:
+  password: "{{ vpncloud.password }}"
+device:
+  name: "vpncloud%d"
+  type: tun
+  fix-rp-filter: true
+mode: normal
+auto-claim: true
+ip: "{{ ip }}"

@@ -1,21 +1,20 @@
-## Playbook Ansible d'initialisation de serveurs
+# Installation, mise à jour et conformité de l'infrastructure de Drave Développement
 
-### Ce que ça fait :
-- Crée les comptes des administrateurs via une liste dans une variable (sudoer sans mot de passe à fournir)
-- Importe les clés publiques SSH des administrateurs via GitHub puis les associe aux comptes des administrateurs
-- Installe Docker et docker-compose
+## Usage
 
-### Prérequis :
-- [Ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html)
-- [nickjj.user](https://galaxy.ansible.com/nickjj/user), [geerlingguy.pip](https://galaxy.ansible.com/geerlingguy/pip), [geerlingguy.docker](https://galaxy.ansible.com/geerlingguy/docker) et [ypsman.hostname](https://galaxy.ansible.com/ypsman/hostname)
+    # Installe les rôles externes
+    ansible-galaxy install -r roles/requirements.yml
 
-### Variables :
-Éditer [group_vars/all](group_vars/all)
 
-### Démarrer l'installation :
-```ansible-playbook -i inventory.ini -u nom_utilisateur_github playbook.yml```
+    # Setup minimal sur une machine "neuve"
+    #   - configurer l'inventaire
+    #   - configurer les credentials initiaux
+    ansible-playbook -i inventaire setup.yml \
+        -e '{ "draveur" : "DRAVEUR" , "init_hosts": "INIT_HOSTS" }'  \
+        -e @draveurs.yml \
+        INVENTAIRE_ET_CREDENTIALS
 
-### Démarrer à un endroit précis du playbook :
-Utiliser le nom d'un "tags:" présent dans playbook.yml
 
-exemple : ```ansible-playbook -i inventory.ini -u nom_utilisateur_github -t install-docker playbook.yml```
+    # Playbook idempotent permettant d'installer, de mettre à jour et d'assurer la conformité de l'infrastructure de Drave Développment
+    ansible-playbook sites.yml \
+       INVENTAIRE_ET_CREDENTIALS

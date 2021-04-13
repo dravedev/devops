@@ -1,0 +1,21 @@
+# Regroupe les configuration de tous les draveurs
+# pourra éventuellement être scindé
+
+draveurs:
+  - name: jvtrudel
+    github: jvtrudel
+    drave_subdomain: bytwon
+    vpncloud_port: 3210
+  - name: rngadam
+    github: rngadam
+    vpncloud_port: 9090
+    drave_subdomain: alligator
+  - name: manuelviens
+    drave_subdomain: cribe
+    vpncloud_port: 3210
+  - name: andiechu
+  - name: ElicNg
+  - name: mathben
+  - name: Thibou2Chou
+  - name: Tabinol
+    drave_subdomain: ours

@@ -1,0 +1,14 @@
+---
+- name: Un draveur a un compte
+  ansible.builtin.user:
+    name: "{{ username }}"
+    shell: /bin/bash
+    groups: users,sudo
+    append: true
+- name: Importation de la clef publique de github
+  authorized_key:
+    user: "{{ github_username }}"
+    state: present
+    key: "https://github.com/{{ github_username }}.keys"
+  # todo: gestion d'un échec
+  # todo: gestion d'une autre source de clef

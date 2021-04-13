@@ -1,0 +1,10 @@
+---
+# FAST AND DIRTY IMPLEMENTATION
+#
+
+- shell: "echo \"deb https://repo.ddswd.de/deb stable main\" | tee /etc/apt/sources.list.d/vpncloud.list"
+- shell: "wget https://repo.ddswd.de/deb/public.key -qO - | sudo apt-key add"
+- apt:
+    update_cache: true
+- apt:
+    name: vpncloud

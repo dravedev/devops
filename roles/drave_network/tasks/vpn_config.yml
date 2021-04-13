@@ -1,0 +1,27 @@
+---
+- include_vars:
+    file: vpncloud.yml
+- block:
+    - name: Set the retry count
+      set_fact:
+        retry_count: "{{ 0 if retry_count is undefined else retry_count|int + 1 }}"
+    - set_fact:
+        random_addr: "{{ 255 | random }}"
+      run_once: true
+    - set_fact:
+        ip: "{{ vpncloud.subdomain }}.{{ random_addr }}"
+
+    - template:
+        src: drave.net.j2
+        dest: /etc/vpncloud/drave.net
+    - systemd:
+        name: vpncloud@drave
+        state: restarted
+        enabled: yes
+  rescue:
+    - fail:
+        msg: Ended after 5 retries
+      when: retry_count|int == 5
+    - debug:
+        msg: "Failed to connect - Retrying..."
+    - include_tasks: vpn_config.yml

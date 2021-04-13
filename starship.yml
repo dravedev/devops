@@ -1,0 +1,39 @@
+- name: Installation de starship
+  hosts: all
+  tags:
+    - starship
+  become: "True"
+  tasks:
+    - name: Vérification si starship est déjà installé
+      stat:
+        path: /usr/local/bin/starship
+      register: present
+    - name: Téléchargement du script d'installation de starship
+      get_url:
+        url: https://starship.rs/install.sh
+        dest: ~/starship.sh
+      when: present.stat.exists == False
+    - name: Démarrage du script d'installation de starship
+      ansible.builtin.command:
+        cmd: bash ~/starship.sh -f
+        creates: /usr/local/bin/starship
+      when: present.stat.exists == False
+    - name: Vérification si starship est maintenant installé
+      stat:
+        path: /usr/local/bin/starship
+      register: present
+    - name: Effaceent du script d'installation
+      ignore_errors: true
+      file:
+        state: absent
+        path: ~/starship.sh
+      when: present.stat.exists
+    - name: Vérification (et modification si nécessaire) du fichier /etc/skel/.bashrc
+      lineinfile:
+        dest: /etc/skel/.bashrc
+        line: eval "$(starship init bash)"
+        state: present
+    - name: Copie du répertoire /etc/skel/.config/
+      ansible.builtin.copy:
+        src: ./files/.config/
+        dest: /etc/skel/.config/

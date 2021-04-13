@@ -1,0 +1,30 @@
+- hosts: all
+  name: Assure la configuration de base
+  become: true
+  vars_files:
+    - draveurs.yml
+  tasks:
+    - name: Tous les draveurs administrent le système
+      block:
+        - include_role:
+            name: draveurs
+          vars:
+            action: system_config
+        - include_role:
+            name: draveurs
+          vars:
+            action: draveur
+            username: "{{ item.name | default(item.github) }}"
+            github_username: "{{ item.github | default(item.name) }}"
+          loop: "{{ draveurs }}"
+      tags:
+        - users
+
+
+    - name: Le serveur est sécurisé
+      include_role:
+        name: endurcissement
+
+    - name: Le serveur se connecte au réseau des draveurs
+      include_role:
+        name: drave_network
