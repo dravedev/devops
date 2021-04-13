@@ -1,0 +1,26 @@
+listen: 3210
+
+ip: 10.0.0.2
+
+peers:
+  - bytwon.drave.dev:3210
+  - alligator.drave.dev:3210
+
+peer-timeout: 300
+
+switch-timeout: 300
+
+crypto:
+  password: "nimportequoi"
+
+device:
+  name: "vpncloud%d"
+  type: tun
+  fix-rp-filter: true
+
+mode: normal
+
+auto-claim: true
+
+beacon:
+  interval: 3600

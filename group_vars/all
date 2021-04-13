@@ -9,4 +9,5 @@ admins:
   - Thibou2Chou
   - Tabinol
 
-adresse_rocketchat: chat.drave.ovh
+# Pour le rôle ssh_hardening de la collection devsec.hardening
+sftp_enabled: true

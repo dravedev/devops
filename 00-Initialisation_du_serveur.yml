@@ -1,6 +1,6 @@
 ---
 - name: Configuration sudoer sans mot de passe
-  hosts: cribe
+  hosts: all
   tags:
     - init
     - sudoers-nopassword
@@ -13,7 +13,7 @@
           %sudo ALL=(ALL) NOPASSWD: ALL
 
 - name: Mise à jour via apt
-  hosts: cribe
+  hosts: all
   tags:
     - apt_upgrade
   become: "True"
@@ -25,7 +25,7 @@
         cache_valid_time: 300
 
 - name: Installation de starship
-  hosts: cribe
+  hosts: all
   tags:
     - starship
   become: "True"
@@ -65,7 +65,7 @@
         dest: /etc/skel/.config/
 
 - name: Création des compte des administrateurs
-  hosts: cribe
+  hosts: all
   tags:
     - admins
   become: "True"
@@ -90,7 +90,7 @@
       loop: "{{ admins }}"
 
 - name: Installation de fail2ban
-  hosts: cribe
+  hosts: all
   tags:
     - fail2ban
   become: "True"
@@ -100,7 +100,7 @@
         name: thorian93.ansible_role_fail2ban
 
 - name: Configuration du pare-feu
-  hosts: cribe
+  hosts: all
   tags:
     - pare-feu
   become: "True"
@@ -124,7 +124,7 @@
             comment: "Autoriser les connexions entrantes sur le port HTTPS (TCP) standard"
 
 - name: Mise en place /etc/hosts
-  hosts: cribe
+  hosts: all
   tags:
     - hosts
   become: "True"
@@ -134,7 +134,7 @@
         name: arillso.hosts
 
 - name: Nommer le serveur
-  hosts: cribe
+  hosts: all
   tags:
     - hostname
   become: "True"
