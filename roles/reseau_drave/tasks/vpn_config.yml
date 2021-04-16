@@ -1,0 +1,16 @@
+---
+- include_vars:
+    file: vpncloud.yml
+- name: Récupère les informations de la nodes
+  set_fact:
+    node_info: "{{ nodes | selectattr('name','contains', node) | list |  json_query(\"[0]\") }}"
+
+- name: Écrit le fichier de configuration du réseau vpn
+  template:
+    src: drave.net.j2
+    dest: /etc/vpncloud/drave.net
+
+- systemd:
+    name: vpncloud@drave
+    state: restarted
+    enabled: yes

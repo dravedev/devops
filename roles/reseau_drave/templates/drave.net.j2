@@ -1,0 +1,18 @@
+listen: {{ node_info.vpn_port | default(default_vpn_port) }}
+peers:
+{% for node in nodes %}
+{% if (node_info.name != node.name) %}
+  - {{ node.public_ip }}:{{ node.vpn_port | default(default_vpn_port) }}
+{% endif %}
+{% endfor %}
+peer-timeout: 300
+switch-timeout: 300
+crypto:
+  password: "{{ vpncloud.password }}"
+device:
+  name: "vpncloud%d"
+  type: tun
+  fix-rp-filter: true
+mode: normal
+auto-claim: false
+ip: "{{ node_info.private_ip }}"
