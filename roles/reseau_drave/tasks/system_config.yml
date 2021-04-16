@@ -1,9 +1,14 @@
 ---
-# FAST AND DIRTY IMPLEMENTATION
-#
+- name: Ajoute le repo contenant vpncloud
+  copy:
+    content: "deb https://repo.ddswd.de/deb stable main"
+    dest: /etc/apt/sources.list.d/vpncloud.list
 
-- shell: "echo \"deb https://repo.ddswd.de/deb stable main\" | tee /etc/apt/sources.list.d/vpncloud.list"
-- shell: "wget https://repo.ddswd.de/deb/public.key -qO - | sudo apt-key add"
+- name: Ajoute la clef gpg pour vpncloud au trousseau de Apt
+  ansible.builtin.apt_key:
+    url: https://repo.ddswd.de/deb/public.key
+    state: present
+
 - apt:
     update_cache: true
 - apt:

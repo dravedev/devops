@@ -1,3 +1,6 @@
+# Playbook qui installe Starship, un fancy shell
+# Voir:  https://starship.rs/fr-FR/config/
+
 - name: Installation de starship
   hosts: all
   tags:
