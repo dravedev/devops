@@ -1,0 +1,8 @@
+---
+- name: Utilisation du rôle arillso.hosts
+   include_role:
+        name: arillso.hosts
+
+- name: Utilisation de la variable ansible_host comme nom d'hôte
+  ansible.builtin.hostname:
+    name: "{{ ansible_host }}"

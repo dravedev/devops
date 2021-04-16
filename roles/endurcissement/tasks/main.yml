@@ -1,0 +1,20 @@
+---
+# Fail...
+#- name: Installe fail2ban avec le rôle thorian93.ansible_role_fail2ban
+#  include_role:
+#    name: thorian93.ansible_role_fail2ban
+
+
+- name: Configure le pare-feu avec le rôle oefenweb.ufw
+  include_role:
+    name: oefenweb.ufw
+  vars:
+    ufw_rules:
+      - rule: allow
+        to_port: 22
+        protocol: tcp
+        comment: "Autoriser les connexions entrantes sur le port SSH (TCP) standard"
+      - rule: allow
+        to_port: 443
+        protocol: tcp
+        comment: "Autoriser les connexions entrantes sur le port HTTPS (TCP) standard"

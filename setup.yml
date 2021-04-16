@@ -1,0 +1,27 @@
+# playbook pour l'initialisation d'un serveur
+#   - installe un draveur
+
+
+- hosts: initialisation
+  become: true
+  gather_facts: "{{ do_gather_facts | default(false) }}"
+  vars_files:
+    - draveurs.yml
+
+  tasks:
+
+    - name: mise à jour du système
+      apt:
+        update_cache: true
+
+    - include_role:
+        name: draveurs
+      vars:
+        action: system_config
+
+
+    - include_role:
+        name: draveurs
+      vars:
+        action: draveur
+        username: "{{ user }}"

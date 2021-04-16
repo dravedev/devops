@@ -1,21 +1,44 @@
-## Playbook Ansible d'initialisation de serveurs
+# Infrastructure décentralisée de Drave Développement
 
-### Ce que ça fait :
-- Crée les comptes des administrateurs via une liste dans une variable (sudoer sans mot de passe à fournir)
-- Importe les clés publiques SSH des administrateurs via GitHub puis les associe aux comptes des administrateurs
-- Installe Docker et docker-compose
+Ce projet permet d'installer, de mettre à jour et d'assurer la conformité des nodes de l'infrastructure décentralisée de Drave Développement.
 
-### Prérequis :
-- [Ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html)
-- [nickjj.user](https://galaxy.ansible.com/nickjj/user), [geerlingguy.pip](https://galaxy.ansible.com/geerlingguy/pip), [geerlingguy.docker](https://galaxy.ansible.com/geerlingguy/docker) et [ypsman.hostname](https://galaxy.ansible.com/ypsman/hostname)
+Chaque draveur-e-s peut y partager des nodes qui sont des ordinateurs ou des serveurs auto-hébergés.
 
-### Variables :
-Éditer [group_vars/all](group_vars/all)
 
-### Démarrer l'installation :
-```ansible-playbook -i inventory.ini -u nom_utilisateur_github playbook.yml```
+## Préparation de la node
 
-### Démarrer à un endroit précis du playbook :
-Utiliser le nom d'un "tags:" présent dans playbook.yml
+Installer Ubuntu 20.04.
 
-exemple : ```ansible-playbook -i inventory.ini -u nom_utilisateur_github -t install-docker playbook.yml```
+## Prérequis
+
+  - ansible 2.9+
+
+Installer les roles et collections requises:
+    ansible-galaxy install -r requirements.yml
+
+## Initialisation des nodes
+
+Si vos nodes n'ont pas d'utilisateur avec droits sudo portant le même nom que l'utilisateur lançant ansible, alors:
+
+Fournir un inventaire d'initialisation
+
+    [initialisation]
+    NODE_NAME ansible_host=NODE_LAN_IP  ansible_user=INIT_USERNAME ...
+
+Appliquer le playbook d'initialisation des utilisateurs:
+
+    ansible-playbook -i INVENTAIRE setup.yml
+
+S'assurer d'avoir la clef ssh de votre draveur sur votre lanceur ansible.
+
+
+## Usage
+
+Fournir un inventaire:
+
+    [initialisation]
+    NODE_NAME ansible_host=NODE_LAN_IP  ansible_user=INIT_USERNAME ...
+
+Lancer le playbook:
+
+    ansible-playbook -i INVENTAIRE sites.yml
