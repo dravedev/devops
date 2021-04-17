@@ -12,11 +12,11 @@ Ajouter le nom de votre utilisateur dans la liste des draveur-e-s dans `draveurs
 
 ## Inscription d'une node
 
-Générerez vous une clef:
+Générerez-vous une clef:
 
     vpncloud genkey
 
-Mettez la clef privée dans les variables de votre nost de node (`vpn_private_key`). La partie publique ira dans le fichier `nodes.yml`.
+Mettez la clef privée dans les variables de votre host de node (`vpn_private_key`). La partie publique ira dans le fichier `nodes.yml`.
 
 Ajouter les informations de la node dans le fichier `nodes.yml`:
 
