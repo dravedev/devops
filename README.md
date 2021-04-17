@@ -4,6 +4,28 @@ Ce projet permet d'installer, de mettre à jour et d'assurer la conformité des 
 
 Chaque draveur-e-s peut y partager des nodes qui sont des ordinateurs ou des serveurs auto-hébergés.
 
+## Inscription d'un draveur
+
+Vous devez avoir un utilisateur github avec une clef ssh dans votre compte.
+
+Ajouter le nom de votre utilisateur dans la liste des draveur-e-s dans `draveurs.yml`
+
+## Inscription d'une node
+
+Générerez vous une clef:
+
+    vpncloud genkey
+
+Mettez la clef privée dans les variables de votre nost de node (`vpn_private_key`). La partie publique ira dans le fichier `nodes.yml`.
+
+Ajouter les informations de la node dans le fichier `nodes.yml`:
+
+    name: <nom de la node>
+    domain: <url ou ip public>
+    vpn_port: <no de port (optionnel)>
+    private_ip: <ip sur le réseau vpn>
+    public_key: <clef publique  vpncloud>
+    proprietaire: <propriétaire de la node (optionnel)>
 
 ## Préparation de la node
 

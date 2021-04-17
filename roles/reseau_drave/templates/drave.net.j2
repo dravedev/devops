@@ -2,13 +2,21 @@ listen: {{ node_info.vpn_port | default(default_vpn_port) }}
 peers:
 {% for node in nodes %}
 {% if (node_info.name != node.name) %}
-  - {{ node.public_ip }}:{{ node.vpn_port | default(default_vpn_port) }}
+  - {{ node.domain }}:{{ node.vpn_port | default(default_vpn_port) }}
 {% endif %}
 {% endfor %}
 peer-timeout: 300
 switch-timeout: 300
 crypto:
-  password: "{{ vpncloud.password }}"
+  private-key: "{{ vpncloud_private_key }}"
+  public-key: "{{ node_info.public_key }}"
+  trusted-keys:
+{% for node in nodes %}
+{% if (node_info.name != node.name) and (node.public_key is defined)%}
+    - {{ node.public_key }}
+{% endif %}
+{% endfor %}
+
 device:
   name: "vpncloud%d"
   type: tun

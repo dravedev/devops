@@ -1,16 +1,16 @@
 nodes:
   - name: bytwon
     domain: bytwon.drave.dev
-    public_ip: 184.162.204.44
     private_ip:  10.0.0.17
+    public_key: C1X5j76r8SlMlud5VSegPShEQ6SfskYbjcCcaNbto36
     proprietaire: jvtrudel
 
 
   - name: pike
-    domain: pike.drave.dev
-    public_ip: 184.162.204.44
+    domain: bytwon.drave.dev
     vpn_port: 9090
     private_ip:  10.0.0.19
+    public_key: Q59EiOSouSpmoB19RPVJzbZ12KCwizt9tNUK7GqtOKV
     proprietaire: jvtrudel
 
   - name: cribe
