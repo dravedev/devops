@@ -10,18 +10,19 @@
 
   tasks:
 
-    - name: mise à jour du système
+    - name: Met à jour l'index des packages
       apt:
         update_cache: true
 
-    - include_role:
+    - name: "Installe le draveur {{ user }}"
+      include_role:
         name: draveurs
       vars:
-        action: system_config
-
-
-    - include_role:
-        name: draveurs
-      vars:
-        action: draveur
         username: "{{ user }}"
+
+    - name: "Supprime l'utilisateur {{ item }}"
+      user:
+        name: "{{ item }}"
+        state: absent
+        remove: yes
+      loop: "{{ delusers.split(',') | list }}"
