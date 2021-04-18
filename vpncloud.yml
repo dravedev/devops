@@ -1,7 +1,0 @@
-# Configurations du réseau vpncloud
-
-
-vpncloud:
-  password: nimportequoi
-  subdomain: 10.0.0
-  

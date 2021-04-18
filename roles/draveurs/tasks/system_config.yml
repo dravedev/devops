@@ -1,6 +1,9 @@
 - name: Un sudoers n'a pas besoin de mot de passe
   ansible.builtin.copy:
-    dest: "/etc/sudoers.d/90-sudoers-nopassword"      
+    dest: "/etc/sudoers.d/90-sudoers-nopassword"
     content: |
           %sudo ALL=(ALL) NOPASSWD: ALL
 
+- set_fact:
+    vars:
+      draveurs_system_config_ok: yes

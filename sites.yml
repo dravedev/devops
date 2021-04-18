@@ -6,14 +6,7 @@
     - nodes.yml
   tasks:
 
-    - name: Le serveur se connecte au réseau des draveurs
-      include_role:
-        name: reseau_drave
-      vars:
-        node: "{{ inventory_hostname }}"
-    - fail:
-
-    - name: Tous les draveurs administrent le système
+    - name: "Le draveur {{ item }} administre le système"
       include_role:
         name: draveurs
       vars:

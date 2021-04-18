@@ -1,3 +1,4 @@
 ---
 - include_tasks: system_config.yml
+  when: draveurs_system_config_ok == false
 - include_tasks: draveur.yml

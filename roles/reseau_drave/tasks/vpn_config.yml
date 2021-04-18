@@ -1,6 +1,4 @@
 ---
-- include_vars:
-    file: vpncloud.yml
 - name: Récupère les informations de la nodes
   set_fact:
     node_info: "{{ nodes | selectattr('name','contains', node) | list |  json_query(\"[0]\") }}"
