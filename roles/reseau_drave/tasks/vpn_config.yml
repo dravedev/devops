@@ -3,6 +3,32 @@
   set_fact:
     node_info: "{{ nodes | selectattr('name','contains', node) | list |  json_query(\"[0]\") }}"
 
+- name: liste clées publiques
+  become: no
+  local_action:
+    module: find
+    paths: "public/"
+    patterns: "*.key"
+  register: vpncloud_public_key_files
+
+- name: lit clées publiques
+  become: no
+  with_items: "{{vpncloud_public_key_files.files}}"
+  local_action:
+    module: file
+    path: "{{item.path}}"
+  register: vpncloud_public_keys
+
+- name: Lit clée privée
+  become: no
+  local_action:
+    module: file
+    path: "private/{{node_info.name}}.key"
+  register: vpncloud_private_key
+
+- debug:
+    msg: "{{vpncloud_public_keys}}"
+
 - name: Écrit le fichier de configuration du réseau vpn
   template:
     src: drave.net.j2
