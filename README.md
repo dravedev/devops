@@ -20,12 +20,12 @@ Mettez la clef privée dans les variables de votre host de node (`vpn_private_ke
 
 Ajouter les informations de la node dans le fichier `nodes.yml`:
 
-    name: <nom de la node>
-    domain: <url ou ip public>
-    vpn_port: <no de port (optionnel)>
-    private_ip: <ip sur le réseau vpn>
-    public_key: <clef publique  vpncloud>
-    proprietaire: <propriétaire de la node (optionnel)>
+   nodes:
+     - name: alligator
+       domain: alligator.drave.dev
+       private_ip: 10.0.0.1
+       public_key: 5HPdhX88rbSrHk4l2ddr2spxzxFEZQAGM92hwsDRgHF
+       proprietaire: rngadam
 
 ## Prérequis et préparation de la node
 
@@ -49,9 +49,12 @@ Fournir un inventaire d'initialisation
     [initialisation]
     NODE_NAME ansible_host=NODE_LAN_IP  ansible_user=INIT_USERNAME ...
 
+    [owned_nodes]
+    NODE_NAME
+
 Appliquer le playbook d'initialisation des utilisateurs:
 
-    ansible-playbook -i INVENTAIRE setup.yml -e user=DRAVEUR_NAME -e delusers=OLDUSER1,OLDUSER2
+    ansible-playbook -i INVENTAIRE setup.yml -e user=DRAVEUR_NAME -e delusers=OLDUSER1,OLDUSER2 --ask-become-pass
 
 S'assurer d'avoir la clef ssh de votre draveur sur votre lanceur ansible.
 

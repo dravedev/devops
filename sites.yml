@@ -20,6 +20,7 @@
         name: endurcissement
 
     - name: Le serveur se connecte au réseau des draveurs
+      tags: reseau_drave
       include_role:
         name: reseau_drave
       vars:
