@@ -2,10 +2,6 @@ nodes:
   - name: alligator
     domain: alligator.drave.dev
     private_ip: 10.0.0.76
-  - name: pike
-    domain: pike.drave.dev
-    vpn_port: 9090
-    private_ip: 10.0.0.19
   - name: bytwon
     domain: bytwon.drave.dev
     private_ip: 10.0.0.17
