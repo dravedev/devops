@@ -1,7 +1,7 @@
 - hosts: owned_nodes
   name: Assure la configuration de base
   become: true
-  gather_facts: false
+  gather_facts: true
   vars_files:
     - draveurs.yml
     - nodes.yml
@@ -35,7 +35,7 @@
         name: genkey
         apply:
           tags: [vpncloud, genkey]
-      tags: always
+      tags: [always, genkey]
 
     - name: Le serveur se connecte au réseau des draveurs
       include_role:
