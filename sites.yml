@@ -35,7 +35,7 @@
         name: genkey
         apply:
           tags: [vpncloud, genkey]
-      tags: [always, genkey]
+      tags: always
 
     - name: Le serveur se connecte au réseau des draveurs
       include_role:

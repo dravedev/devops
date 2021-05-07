@@ -4,6 +4,7 @@ nodes:
     private_ip: 10.0.0.76
   - name: bytwon
     domain: bytwon.drave.dev
+    vpn_port: 9999
     private_ip: 10.0.0.17
   - name: cribe
     domain: cribe.drave.dev

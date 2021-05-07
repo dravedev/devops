@@ -3,31 +3,40 @@
   set_fact:
     node_info: "{{ nodes | selectattr('name','contains', node) | list |  json_query(\"[0]\") }}"
 
-- name: liste clées publiques
-  become: no
-  local_action:
-    module: find
-    paths: "public/"
-    patterns: "*.key"
-  register: vpncloud_public_key_files
+#- name: liste clées publiques
+#  become: no
+#  local_action:
+#    module: find
+#    paths: "public/"
+#    patterns: "*.key"
+#  register: vpncloud_public_key_files
+
+
 
 - name: lit clées publiques
   become: no
-  with_items: "{{vpncloud_public_key_files.files}}"
+  loop: "{{ nodes }}"
   local_action:
-    module: file
-    path: "{{item.path}}"
+    module: shell cat public/{{item.name}}.key
   register: vpncloud_public_keys
+
 
 - name: Lit clée privée
   become: no
   local_action:
-    module: file
-    path: "private/{{node_info.name}}.key"
+    module: shell cat private/{{node_info.name}}.key
   register: vpncloud_private_key
 
-- debug:
-    msg: "{{vpncloud_public_keys}}"
+- set_fact:
+      vpncloud_private_key: "{{ vpncloud_private_key.stdout }}"
+
+
+- set_fact:
+    vpncloud_public_key: "{{ vpncloud_public_keys.results | selectattr('item.name', 'equalto', node) | list | first| json_query('stdout') }}"
+
+- set_fact:
+    vpncloud_public_keys: "{{ vpncloud_public_keys.results | json_query('[].stdout') }}"
+
 
 - name: Écrit le fichier de configuration du réseau vpn
   template:

@@ -9,11 +9,11 @@ peer-timeout: 300
 switch-timeout: 300
 crypto:
   private-key: "{{ vpncloud_private_key }}"
-  public-key: "{{ vpncloud_public_keys[node_info.name] }}"
+  public-key: "{{ vpncloud_public_key }}"
   trusted-keys:
-{% for node in nodes %}
-{% if (node_info.name != node.name) %}
-    - {{ vpncloud_public_keys[node.name] }}
+{% for key in vpncloud_public_keys %}
+{% if (key != vpncloud_public_key ) %}
+    - {{ key }}
 {% endif %}
 {% endfor %}
 
