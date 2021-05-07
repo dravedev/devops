@@ -18,6 +18,7 @@
   loop: "{{ nodes }}"
   local_action:
     module: shell cat public/{{item.name}}.key
+  when:  "'public/{{item.name}}.key' is exists"
   register: vpncloud_public_keys
 
 

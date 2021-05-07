@@ -8,8 +8,8 @@ peers:
 peer-timeout: 300
 switch-timeout: 300
 crypto:
-  private-key: "{{ vpncloud_private_key }}"
-  public-key: "{{ vpncloud_public_key }}"
+  private-key: {{ vpncloud_private_key }}
+  public-key: {{ vpncloud_public_key }}
   trusted-keys:
 {% for key in vpncloud_public_keys %}
 {% if (key != vpncloud_public_key ) %}
@@ -19,8 +19,8 @@ crypto:
 
 device:
   name: "vpncloud%d"
-  type: tun
-  fix-rp-filter: true
+  type: {{ node_info.vpn_options.device.type | default('tun') }}
+  fix-rp-filter: {{ node_info.vpn_options.device.fix_rp_iflter | default('true') }}
 mode: normal
-auto-claim: false
+auto-claim: {{ node_info.vpn_options.auto_claim | default('true') }}
 ip: "{{ node_info.private_ip }}"
