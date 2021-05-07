@@ -1,8 +1,4 @@
 ---
-- name: debug
-  ansible.builtin.debug:
-    msg: "this is working"
-
 - name: Ajoute le repo contenant vpncloud
   copy:
     content: "deb https://repo.ddswd.de/deb stable main"
@@ -15,5 +11,6 @@
 
 - apt:
     update_cache: true
+
 - apt:
     name: vpncloud

@@ -1,4 +1,4 @@
-listen: {{ node_info.vpn_port | default(default_vpn_port) }}
+listen: {{ vpn_port }}
 peers:
 {% for node in nodes %}
 {% if (node_info.name != node.name) %}

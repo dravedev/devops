@@ -14,8 +14,7 @@ Cependant, vous pouvez utiliser ce code pour créer votre propre communauté ou 
 
 * Installer Ubuntu 20.04.
 * Ajouter une résolution de DNS pour <HOSTNAME>.drave.dev vers l'IP publique de votre accès Internet auquel la machine cible est connecté
-  * vpncloud va ouvrir le port 3120 automatiquement en utilisant UPnP
-
+  * vpncloud va ouvrir le port 3120 automatiquement en configurant votre routeur en utilisant UPnP
 
 ## Inscription d'une node
 
@@ -53,6 +52,8 @@ Fournir un inventaire d'initialisation ```inventaire```
     [owned_nodes]
     NODE_NAME
 
+## Initialisation
+
 Appliquer le playbook d'initialisation des utilisateurs:
 
     ansible-playbook -i inventaire setup.yml --ask-become-pass
@@ -61,17 +62,12 @@ S'assurer d'avoir la clef ssh de votre draveur sur votre lanceur ansible.
 
 ## Installation
 
-Fournir un inventaire:
-
-    [initialisation]
-    NODE_NAME ansible_host=NODE_LAN_IP ansible_user=INIT_USERNAME
-
 Lancer le playbook:
 
     ansible-playbook -i INVENTAIRE sites.yml
 
-## Autre
+## Autres
 
-D'autres options sont disponibles pour effacer des usagers:
+D'autres options sont disponibles pour effacer des usagers ajoutés accidentellement:
 
     ansible-playbook -i INVENTAIRE setup.yml -e user=DRAVEUR_NAME -e delusers=OLDUSER1,OLDUSER2 --ask-become-pass

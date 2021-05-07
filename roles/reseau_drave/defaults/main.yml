@@ -1,1 +1,2 @@
 default_vpn_port: 3210
+vpn_port: "{{node_info.vpn_port | default(default_vpn_port)}}"

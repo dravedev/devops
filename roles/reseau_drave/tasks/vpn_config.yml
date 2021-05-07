@@ -48,3 +48,17 @@
     name: vpncloud@drave
     state: restarted
     enabled: yes
+
+- name: Configure le pare-feu avec le rôle oefenweb.ufw
+  include_role:
+    name: oefenweb.ufw
+  vars:
+    ufw_rules:
+      - rule: allow
+        to_port: "{{vpn_port}}"
+        protocol: tcp
+        comment: "Autoriser les connexions entrantes sur le port vpncloud (UDP)"
+      - rule: allow
+        from: 10.0.0.0/24
+        protocol: any
+        comment: "all traffic allowed on virtual private network"
