@@ -8,3 +8,6 @@ nodes:
   - name: cribe
     domain: cribe.drave.dev
     private_ip: 10.0.0.77
+  - name: ours
+    domain: ours.drave.dev
+    private_ip: 10.0.0.78
