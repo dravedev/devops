@@ -9,8 +9,10 @@
     url: https://repo.ddswd.de/deb/public.key
     state: present
 
-- apt:
+- name: Met à jour les packages
+  apt:
     update_cache: true
 
-- apt:
+- name: installe vpncloud
+  apt:
     name: vpncloud
