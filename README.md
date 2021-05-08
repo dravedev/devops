@@ -24,7 +24,9 @@ Exemple d'inventaire (inventaire):
     <HOSTNAME> ansible_host= <HOSTNAME>.local ansible_user=<VOTRE USAGER>
 
     [owned_nodes]
-     <HOSTNAME>à
+     <HOSTNAME>
+
+dans nodes.yml:
 
    nodes:
      - name: <HOSTNAME>

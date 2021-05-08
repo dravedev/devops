@@ -1,2 +1,6 @@
+---
+roles:
 - src: thorian93.ansible_role_fail2ban
-- src: oefenweb.ufw
+
+collections:
+- name: community.general
