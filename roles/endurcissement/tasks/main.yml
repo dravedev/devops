@@ -1,20 +1,26 @@
 ---
-# Fail...
-#- name: Installe fail2ban avec le rôle thorian93.ansible_role_fail2ban
-#  include_role:
-#    name: thorian93.ansible_role_fail2ban
+# - name: Allow all access from RFC1918 networks to this host
+#   community.general.ufw:
+#     rule: allow
+#     src: '{{ item }}'
+#   loop:
+#     - 10.0.0.0/8
+#     - 172.16.0.0/12
+#     - 192.168.0.0/16
 
+- name: rate limiting failed connections
+  community.general.ufw:
+    rule: limit
+    port: ssh
+    proto: tcp
 
-- name: Configure le pare-feu avec le rôle oefenweb.ufw
-  include_role:
-    name: oefenweb.ufw
-  vars:
-    ufw_rules:
-      - rule: allow
-        to_port: 22
-        protocol: tcp
-        comment: "Autoriser les connexions entrantes sur le port SSH (TCP) standard"
-      - rule: allow
-        to_port: 443
-        protocol: tcp
-        comment: "Autoriser les connexions entrantes sur le port HTTPS (TCP) standard"
+- name: allow openssh server
+  community.general.ufw:
+    rule: allow
+    name: OpenSSH
+
+- name: Allow all access to tcp port 443
+  community.general.ufw:
+    rule: allow
+    port: '443'
+    proto: tcp

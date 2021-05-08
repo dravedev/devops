@@ -1,4 +1,2 @@
 ---
-
-- include_tasks: system_config.yml
 - include_tasks: vpn_config.yml

@@ -11,5 +11,6 @@
 
 - apt:
     update_cache: true
+
 - apt:
     name: vpncloud

@@ -1,6 +1,7 @@
 - hosts: owned_nodes
   name: Assure la configuration de base
   become: true
+  gather_facts: true
   vars_files:
     - draveurs.yml
     - nodes.yml
@@ -18,9 +19,29 @@
     - name: Le serveur est sécurisé
       include_role:
         name: endurcissement
+        apply:
+          tags: endurcissement
+      tags: always
+
+    - name: VPNcloud est installé
+      include_role:
+        name: vpncloud
+        apply:
+          tags: vpncloud
+      tags: always
+
+    - name: Générer clé privée et publique vpncloud
+      include_role:
+        name: genkey
+        apply:
+          tags: [vpncloud, genkey]
+      tags: always
 
     - name: Le serveur se connecte au réseau des draveurs
       include_role:
         name: reseau_drave
+        apply:
+          tags: reseau_drave
+      tags: always
       vars:
         node: "{{ inventory_hostname }}"

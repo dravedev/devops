@@ -14,11 +14,11 @@
       apt:
         update_cache: true
 
-    - name: "Installe le draveur {{ user }}"
+    - name: "Installe le draveur {{ user | default(ansible_user) }}"
       include_role:
         name: draveurs
       vars:
-        username: "{{ user }}"
+        username: "{{ user | default(ansible_user) }}"
 
     - name: "Supprime l'utilisateur {{ item }}"
       user:
@@ -26,3 +26,4 @@
         state: absent
         remove: yes
       loop: "{{ delusers.split(',') | list }}"
+      when: delusers is defined

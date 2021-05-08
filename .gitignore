@@ -2,6 +2,7 @@
 *.retry
 
 # Fichiers de config privés
-nodes.yml
 inventaire
+inventory
 files
+private/

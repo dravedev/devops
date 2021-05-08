@@ -1,0 +1,43 @@
+---
+- name: vérifier existence de la clée privée
+  become: false
+  local_action:
+    module: stat
+    path: "private/{{inventory_hostname_short}}.key"
+  register: private_key
+
+- name: vérifier existence de la clée publique
+  become: false
+  local_action:
+    module: stat
+    path: "public/{{inventory_hostname_short}}.key"
+  register: public_key
+
+- block:
+
+  - name: générer la clée sur la cible
+    shell: vpncloud genkey
+    register: genkey
+
+  - name: Vérifie que le dossier private existe
+    become: false
+    local_action:
+      module: file
+      path: "{{ inventory_dir }}/private"
+      state: directory
+
+  - name: écrire la clée publique localement
+    become: false
+    local_action:
+      module: ansible.builtin.template
+      src: public.j2
+      dest: "{{ inventory_dir }}/public/{{inventory_hostname_short}}.key"
+
+  - name: écrire la clée privée localement
+    become: false
+    local_action:
+      module: ansible.builtin.template
+      src: private.j2
+      dest: "{{ inventory_dir }}/private/{{inventory_hostname_short}}.key"
+
+  when: (not private_key.stat.exists) or (not public_key.stat.exists)

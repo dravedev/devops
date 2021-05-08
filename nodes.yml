@@ -1,0 +1,14 @@
+nodes:
+  - name: alligator
+    domain: alligator.drave.dev
+    private_ip: 10.0.0.76
+  - name: bytwon
+    domain: bytwon.drave.dev
+    vpn_port: 9999
+    private_ip: 10.0.0.17
+  - name: cribe
+    domain: cribe.drave.dev
+    private_ip: 10.0.0.77
+  - name: ours
+    domain: ours.drave.dev
+    private_ip: 10.0.0.78
