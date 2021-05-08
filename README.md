@@ -14,17 +14,15 @@ Chaque draveur-e-s peut y partager des ordinateurs ou des serveurs auto-héberg�
 
 Pré-requis:
 
-* assure toi d'être dans l'équipe Github: https://github.com/orgs/dravedev/people
-* assure toi d'avoir sur ta station de travail
+- assure toi d'être dans l'équipe Github: https://github.com/orgs/dravedev/people
+- assure toi d'avoir sur ta station de travail (le lanceur du script de configuration):
 
-sur ta station de travail (le lanceur du script de configuration)
-
-* ansible 2.9+
-* ta clée ssh privée associée à ta clée publique de ton utilisateur github
+  -  ansible 2.9+
+  -  ta clée ssh privée associée à ta clée publique de ton utilisateur github
 
 NOTE: Nous prenons pour acquis que ton utilisateur local sur ton lanceur est le même que ton usager sur github et est le même que le nom du propriétaire de chaque node.
 
-Si votre usager local sur votre lanceur ne corresponds pas, vous devez corriger la situation en configurant la variable "owner" passée à Ansible.
+Si votre usager local sur votre lanceur ne correspond pas, vous devez corriger la situation en configurant la variable `owner` passée à Ansible.
 
 ## Inscription d'une node au réseau de Drave Développement
 
@@ -44,18 +42,26 @@ Le fichier `draveurs.yml` contient les noms des utilisateurs des personnes qui o
 
 ## configuration de l'inventaire
 
-* modifie inventory.yml pour ajouter ta node sous all:hosts
+* modifie inventory.yml pour ajouter ta node sous `all:hosts`:
 
      <HOSTNAME>:
        domain: <HOSTNAME>.drave.dev
        private_ip: 10.0.0.<IP non-alloué par d'autres nodes>
 
-* ajoute ton nom d'usager dans children avec ta (ou tes) node(s) définies dans all:hosts
+* ajoute ton nom d'usager dans `children` avec ta (ou tes) node(s) définies dans `all:hosts`:
 
   children:
     <USERNAME>:
       hosts:
         <HOSTNAME>:
+
+
+Pour déclarer l'ip de vos nodes, vous pouvez le faire dans `~/.ssh/config`:
+
+    Host <HOSTNAME>
+        HostName <REACHABLE_IP>
+        User <USERNAME>
+        ForwardAgent yes
 
 ## Initialisation:
 
@@ -71,14 +77,21 @@ D'autres options sont disponibles pour effacer des usagers ajoutés accidentelle
 
 ## Installation
 
-Lancer le playbook pour configurer vos nodes et les joindre au réseau vpncloud de drave développement:
+Lancer le playbook pour configurer vos nodes et les joindre au réseau vpncloud de Drave Développement:
 
     ansible-playbook -i inventory.yml sites.yml
 
-## Pousse tes changements
+## Partage ta node
+
+Si il s'agit d'une nouvelle node, tu as ajouté des information au code. Pour les partager:
 
 * Crée une nouvelle branche
 * Commit tes changements localement
 * Pousse ta branche à Github
 * Crée un pull request sur Github
 * informe le groupe de ton nouveau serveur
+
+# Contribution
+
+* Rejoins la discussion dans le salon de discussion RocketChat: https://rocketchat.drave.quebec/channel/devops
+* Sélectionne un problème à résoudre: https://github.com/dravedev/devops/issues
