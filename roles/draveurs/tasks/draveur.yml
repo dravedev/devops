@@ -1,11 +1,11 @@
 ---
-- name: Un draveur a un compte
+- name: "Le draveur {{ username }} a un compte"
   ansible.builtin.user:
     name: "{{ username }}"
     shell: /bin/bash
     groups: users,sudo
     append: true
-- name: Importation de la clef publique de github
+- name: "Importation de la clef publique de github de {{ username }}"
   authorized_key:
     user: "{{ username }}"
     state: present

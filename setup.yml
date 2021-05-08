@@ -1,8 +1,4 @@
-# playbook pour l'initialisation d'un serveur
-#   - installe un draveur
-
-
-- hosts: initialisation
+- hosts: "{{ owner | default(lookup('env', 'USER')) }}"
   become: true
   gather_facts: "{{ do_gather_facts | default(false) }}"
   vars_files:
