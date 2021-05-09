@@ -98,6 +98,19 @@ Voir
     /var/log/vpncloud-drave.stats
     /var/log/vpncloud-drave.log
 
+
+## Connecte toi à une autre node par ssh
+
+    ssh-add
+
+connecte toi à ta node
+
+    ssh alligator.local
+
+et ensuite connecte toi à la node du vpncloud
+
+    ssh 10.0.0.77
+
 ## Partage ta node
 
 Si il s'agit d'une nouvelle node, tu as ajouté des information au code. Pour les partager:
