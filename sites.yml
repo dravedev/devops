@@ -1,13 +1,12 @@
-- hosts: owned_nodes
+- hosts: "{{ owner | default(lookup('env', 'USER')) }}"
   name: Assure la configuration de base
   become: true
   gather_facts: true
   vars_files:
     - draveurs.yml
-    - nodes.yml
   tasks:
 
-    - name: "Le draveur {{ item }} administre le système"
+    - name: "Chaque draveur administre le système"
       include_role:
         name: draveurs
       vars:

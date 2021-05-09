@@ -40,4 +40,4 @@
       src: private.j2
       dest: "{{ inventory_dir }}/private/{{inventory_hostname_short}}.key"
 
-  when: (not private_key.stat.exists) or (not public_key.stat.exists)
+  when: not (private_key.stat.exists and public_key.stat.exists)

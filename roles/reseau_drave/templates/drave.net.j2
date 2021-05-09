@@ -1,8 +1,8 @@
 listen: {{ vpn_port }}
 peers:
-{% for node in nodes %}
-{% if (node_info.name != node.name) %}
-  - {{ node.domain }}:{{ node.vpn_port | default(default_vpn_port) }}
+{% for node in groups['all'] %}
+{% if (inventory_hostname_short != node) %}
+  - {{ hostvars[node]['domain'] }}:{{ hostvars[node]['vpn_port'] | default(default_vpn_port) }}
 {% endif %}
 {% endfor %}
 peer-timeout: 300
@@ -19,8 +19,8 @@ crypto:
 
 device:
   name: "vpncloud%d"
-  type: {{ node_info.vpn_options.device.type | default('tun') }}
-  fix-rp-filter: {{ node_info.vpn_options.device.fix_rp_iflter | default('true') }}
+  type: {{ vpn_options.device.type | default('tun') }}
+  fix-rp-filter: {{ vpn_options.device.fix_rp_iflter | default('true') }}
 mode: normal
-auto-claim: {{ node_info.vpn_options.auto_claim | default('true') }}
-ip: "{{ node_info.private_ip }}"
+auto-claim: {{ vpn_options.auto_claim | default('true') }}
+ip: "{{ private_ip }}"
