@@ -38,7 +38,7 @@ Si votre usager local sur votre lanceur ne correspond pas, vous devez corriger l
 
 ## configuration des draveurs
 
-Le fichier `draveurs.yml` contient les noms des utilisateurs des personnes qui ont signé le [Serment des Draveur-e-s](https://serment.drave.dev) et qui sont autoriser à rejoindre le réseau.
+Le fichier `draveurs.yml` contient les noms des utilisateurs des personnes qui ont signé le [Serment des Draveur-e-s](https://serment.drave.dev) et qui sont autoriser à rejoindre le réseau. Le nom d'usager est celui présent sur Github.
 
 ## configuration de l'inventaire
 
@@ -47,6 +47,8 @@ Le fichier `draveurs.yml` contient les noms des utilisateurs des personnes qui o
      <HOSTNAME>:
        domain: <HOSTNAME>.drave.dev
        private_ip: 10.0.0.<IP non-alloué par d'autres nodes>
+       ansible_host: <IP sur ton réseau local>
+       ansible_user: <nom usager à utiliser pour accéder à la node en ssh>
 
 * ajoute ton nom d'usager dans `children` avec ta (ou tes) node(s) définies dans `all:hosts`:
 
@@ -65,7 +67,7 @@ Pour déclarer l'ip de vos nodes, vous pouvez le faire dans `~/.ssh/config`:
 
 ## Initialisation:
 
-Si vos nodes n'ont pas d'utilisateur avec droits sudo portant le même nom que l'utilisateur lançant ansible, vous pouvez utiliser le playbook `setup.yml`
+Si tes nodes n'ont pas d'utilisateur avec droits sudo portant le même nom que l'utilisateur lançant ansible, tu peux utiliser le playbook `setup.yml`
 
 Appliquer le playbook d'initialisation des utilisateurs:
 
@@ -80,6 +82,21 @@ D'autres options sont disponibles pour effacer des usagers ajoutés accidentelle
 Lancer le playbook pour configurer vos nodes et les joindre au réseau vpncloud de Drave Développement:
 
     ansible-playbook -i inventory.yml sites.yml
+
+Si ton utilisateur local n'est pas le même que le nom d'usager Github / le nom de compte créé sur la node, tu peux spécifier la variable owner:
+
+    ansible-playbook -i inventory.yml -e owner=TON_NOM_USAGER sites.yml
+
+Les tâches basés sur les rôles ont aussi des libellés (tags) qui permettent de rouler seulement un sous-ensemble:
+
+    ansible-playbook -i inventory.yml sites.yml -t reseau_drave
+
+## Logs
+
+Voir
+
+    /var/log/vpncloud-drave.stats
+    /var/log/vpncloud-drave.log
 
 ## Partage ta node
 
