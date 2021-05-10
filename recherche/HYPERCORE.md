@@ -4,4 +4,4 @@ https://www.digitalocean.com/community/tutorials/how-to-install-node-js-on-ubunt
     sudo bash nodesource_setup.sh
     sudo apt-get install -y nodejs gcc g++ make
     sudo npm install -g @hyperspace/cli
-    hyp drive sync hyper://46ca522e624739408b325fcc25c630be00146a66beebf095d96103a2558585f0// test
+    hyp drive sync hyper://46ca522e624739408b325fcc25c630be00146a66beebf095d96103a2558585f0// testq

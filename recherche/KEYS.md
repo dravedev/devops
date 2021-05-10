@@ -40,3 +40,11 @@ re-add:
 re-publish
 
     ipfs name publish --key=$USER $CID
+
+# pubsub
+
+https://discuss.ipfs.io/t/how-to-use-ipfs-name-pubsub/9818/2
+
+    --enable-pubsub-experiment --enable-namesys-pubsub
+
+    ipfs name resolve /ipns/k2k4r8pe3fd83npsehplboibt4xij42blvjg9s6b0bwo57qsq2o7y9xx
