@@ -11,6 +11,8 @@ all:
     cribe:
       domain: cribe.drave.dev
       private_ip: 10.0.0.77
+      ansible_host: cribe.drave.dev
+      ansible_user: manuelviens
     ours:
       domain: ours.drave.dev
       private_ip: 10.0.0.78
