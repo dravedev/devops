@@ -1,24 +1,9 @@
 all:
   hosts:
     alligator:
-      domain: alligator.drave.dev
-      private_ip: 10.0.0.76
-      ansible_host: alligator.local
-      dyndns: true
     bytwon:
-      domain: bytwon.drave.dev
-      vpn_port: 9999
-      private_ip: 10.0.0.17
     cribe:
-      domain: cribe.drave.dev
-      private_ip: 10.0.0.77
-      ansible_host: cribe.drave.dev
-      ansible_user: manuelviens
     ours:
-      domain: ours.drave.dev
-      private_ip: 10.0.0.78
-      ansible_host: 192.168.1.11
-      ansible_user: Tabinol
   children:
     rngadam:
       hosts:
@@ -29,6 +14,6 @@ all:
     manuelviens:
       hosts:
         cribe:
-    Tabinol:
+    tabinol:
       hosts:
         ours:
