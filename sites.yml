@@ -9,7 +9,7 @@
 
     - name: inclusion secrets
       include_vars:
-        file: "vault/{{inventory_short_name}}.yml"
+        file: "vault/{{inventory_hostname_short}}.yml"
 
     - name: "Chaque draveur administre le système"
       include_role:
