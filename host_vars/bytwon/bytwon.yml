@@ -2,3 +2,9 @@
 domain: bytwon.drave.dev
 vpn_port: 9999
 private_ip: 10.0.0.17
+
+dyndns: true
+inadyn:
+  username: "{{ vault_inadyn_username }}"
+  password: "{{ vault_inadyn_password }}"
+
