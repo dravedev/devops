@@ -15,21 +15,38 @@ Chaque draveur-e-s peut y partager des ordinateurs ou des serveurs auto-héberg�
 Pré-requis:
 
 - assure toi d'être dans l'équipe Github: https://github.com/orgs/dravedev/people
+
+Si votre usager local sur votre lanceur ne correspond pas, vous devez corriger la situation en configurant la variable `owner` passée à Ansible.
+
+* choisi le nom de ta node
+  * convention est un terme terminologique de la drave traditionnelle
+  * http://abcstrategies.com/lexique-draveurs-cageux-bucherons/
+* demande la création de la node comme enregistrement DNS dynamique synthétique sur le domaine drave.dev
+  * un nom d'usager et mot de passe te sera retourné pour configurer ton client DNS dynamique
+
+
+## configuration dyndns
+
+création d'un répertoire
+
+    mkdir -p ./host_vars/$NOM_NODE
+    touch ./host_vars/$NOM_NODE/$NOM_NODE.yml
+    touch ./host_vars/$NOM_NODE/vault.yml
+
+encrypt the vault file:
+
+ ansible-vault encrypt ./host_vars/<HOSTNAME>/vault.yml
+
+choose your own password
+
+## Inscription d'une node au réseau de Drave Développement
+
 - assure toi d'avoir sur ta station de travail (le lanceur du script de configuration):
 
   -  ansible 2.9+
   -  ta clée ssh privée associée à ta clée publique de ton utilisateur github
 
 NOTE: Nous prenons pour acquis que ton utilisateur local sur ton lanceur est le même que ton usager sur github et est le même que le nom du propriétaire de chaque node.
-
-Si votre usager local sur votre lanceur ne correspond pas, vous devez corriger la situation en configurant la variable `owner` passée à Ansible.
-
-* choisi le nom de ta node (convention est un terme terminologique de la drave traditionnelle)
-  * http://abcstrategies.com/lexique-draveurs-cageux-bucherons/
-* demande la création de la node comme enregistrement DNS dynamique synthétique sur le domaine drave.dev
-  * un nom d'usager et mot de passe te sera retourné pour configurer ton client DNS dynamique
-
-## Inscription d'une node au réseau de Drave Développement
 
 * Installe Ubuntu 20.04 sur l'ordinateur que tu veux dédier comme node
 * clone le répository devops
