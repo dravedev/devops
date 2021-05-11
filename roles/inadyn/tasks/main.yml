@@ -1,0 +1,27 @@
+---
+- name: installe inadyn
+  snap:
+    name: inadyn
+
+- name: configure inadyn
+  template:
+    src: inadyn.conf.j2
+    dest: /var/snap/inadyn/current/inadyn.conf
+  register: config
+
+- name: redémarrage si fichier changé
+  ansible.builtin.systemd:
+    state: restarted
+    name: inadyn
+  when: config.changed
+
+- name: s'assure que le service est démarré
+  ansible.builtin.systemd:
+    state: started
+    name: inadyn
+  when: not config.changed
+
+- name: s'assurer que le service démarre au redémarrage machine
+  ansible.builtin.systemd:
+    enabled: yes
+    name: inadyn

@@ -22,6 +22,14 @@
           tags: endurcissement
       tags: always
 
+    - name: L'IP dynamique est configurée
+      include_role:
+        name: inadyn
+        apply:
+          tags: inadyn
+      tags: always
+      when: dyndns
+
     - name: VPNcloud est installé
       include_role:
         name: vpncloud

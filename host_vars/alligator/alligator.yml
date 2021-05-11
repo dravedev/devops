@@ -1,0 +1,4 @@
+---
+inadyn:
+  username: "{{ vault_inadyn_username }}"
+  password: "{{ vault_inadyn_password }}"

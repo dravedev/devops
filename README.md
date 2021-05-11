@@ -24,13 +24,14 @@ NOTE: Nous prenons pour acquis que ton utilisateur local sur ton lanceur est le 
 
 Si votre usager local sur votre lanceur ne correspond pas, vous devez corriger la situation en configurant la variable `owner` passée à Ansible.
 
+* choisi le nom de ta node (convention est un terme terminologique de la drave traditionnelle)
+  * http://abcstrategies.com/lexique-draveurs-cageux-bucherons/
+* demande la création de la node comme enregistrement DNS dynamique synthétique sur le domaine drave.dev
+  * un nom d'usager et mot de passe te sera retourné pour configurer ton client DNS dynamique
+
 ## Inscription d'une node au réseau de Drave Développement
 
 * Installe Ubuntu 20.04 sur l'ordinateur que tu veux dédier comme node
-* détermine ton adresse publique (https://www.whatismyip.com/) de ton routeur Internet
-* choisi le nom de ta node (convention est un terme terminologique de la drave traditionnelle)
-  * http://abcstrategies.com/lexique-draveurs-cageux-bucherons/
-* ajoute une entrée de dans le DNS pointant vers ton adresse publique
 * clone le répository devops
 * installe les dépendances
 
@@ -71,25 +72,25 @@ Si tes nodes n'ont pas d'utilisateur avec droits sudo portant le même nom que l
 
 Appliquer le playbook d'initialisation des utilisateurs:
 
-    ansible-playbook -i inventory.yml setup.yml --ask-become-pass
+    ansible-playbook setup.yml --ask-become-pass
 
 D'autres options sont disponibles pour effacer des usagers ajoutés accidentellement:
 
-    ansible-playbook -i inventory.yml setup.yml -e user=DRAVEUR_NAME -e delusers=OLDUSER1,OLDUSER2 --ask-become-pass
+    ansible-playbook setup.yml -e user=DRAVEUR_NAME -e delusers=OLDUSER1,OLDUSER2 --ask-become-pass
 
 ## Installation
 
 Lancer le playbook pour configurer vos nodes et les joindre au réseau vpncloud de Drave Développement:
 
-    ansible-playbook -i inventory.yml sites.yml
+    ansible-playbook sites.yml
 
 Si ton utilisateur local n'est pas le même que le nom d'usager Github / le nom de compte créé sur la node, tu peux spécifier la variable owner:
 
-    ansible-playbook -i inventory.yml -e owner=TON_NOM_USAGER sites.yml
+    ansible-playbook -e owner=TON_NOM_USAGER sites.yml
 
 Les tâches basés sur les rôles ont aussi des libellés (tags) qui permettent de rouler seulement un sous-ensemble:
 
-    ansible-playbook -i inventory.yml sites.yml -t reseau_drave
+    ansible-playbook sites.yml -t reseau_drave
 
 ## Logs
 
@@ -100,6 +101,8 @@ Voir
 
 
 ## Connecte toi à une autre node par ssh
+
+démarre ssh-agent:
 
     ssh-add
 
