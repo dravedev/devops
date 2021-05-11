@@ -4,7 +4,12 @@
   gather_facts: true
   vars_files:
     - draveurs.yml
+
   tasks:
+
+    - name: inclusion secrets
+      include_vars:
+        file: "vault/{{inventory_hostname_short}}.yml"
 
     - name: "Chaque draveur administre le système"
       include_role:
@@ -21,6 +26,14 @@
         apply:
           tags: endurcissement
       tags: always
+
+    - name: L'IP dynamique est configurée
+      include_role:
+        name: inadyn
+        apply:
+          tags: inadyn
+      tags: always
+      when: dyndns
 
     - name: VPNcloud est installé
       include_role:
