@@ -4,7 +4,12 @@
   gather_facts: true
   vars_files:
     - draveurs.yml
+
   tasks:
+
+    - name: inclusion secrets
+      include_vars:
+        file: "vault/{{inventory_short_name}}.yml"
 
     - name: "Chaque draveur administre le système"
       include_role:
