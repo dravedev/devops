@@ -12,16 +12,16 @@
 - name: redémarrage si fichier changé
   ansible.builtin.systemd:
     state: restarted
-    name: inadyn
+    name: snap.inadyn.daemon
   when: config.changed
 
 - name: s'assure que le service est démarré
   ansible.builtin.systemd:
     state: started
-    name: inadyn
+    name: snap.inadyn.daemon
   when: not config.changed
 
 - name: s'assurer que le service démarre au redémarrage machine
   ansible.builtin.systemd:
     enabled: yes
-    name: inadyn
+    name: snap.inadyn.daemon
