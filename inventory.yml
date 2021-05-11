@@ -4,6 +4,7 @@ all:
       domain: alligator.drave.dev
       private_ip: 10.0.0.76
       ansible_host: alligator.local
+      dyndns: true
     bytwon:
       domain: bytwon.drave.dev
       vpn_port: 9999

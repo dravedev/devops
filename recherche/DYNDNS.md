@@ -9,3 +9,5 @@ créer un enregistrement synthétique
 https://github.com/ddclient/ddclient
 
 sudo snap install inadyn
+
+https://docs.ansible.com/ansible/latest/user_guide/vault.html
