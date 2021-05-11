@@ -1,6 +1,6 @@
 .vscode
 *.retry
-
+.cache/
 # Fichiers de config privés
 inventaire
 inventory

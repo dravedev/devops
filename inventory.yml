@@ -12,9 +12,13 @@ all:
     cribe:
       domain: cribe.drave.dev
       private_ip: 10.0.0.77
+      ansible_host: cribe.drave.dev
+      ansible_user: manuelviens
     ours:
       domain: ours.drave.dev
       private_ip: 10.0.0.78
+      ansible_host: 192.168.1.11
+      ansible_user: Tabinol
   children:
     rngadam:
       hosts:
@@ -25,6 +29,6 @@ all:
     manuelviens:
       hosts:
         cribe:
-    tabinol:
+    Tabinol:
       hosts:
         ours:
