@@ -3,7 +3,7 @@
   become: no
   loop: "{{ groups['all'] }}"
   local_action:
-    module: shell [ -f public/{{item}}.key ] && cat public/{{item}}.key
+    module: shell [ -f public/{{item}}.key ] && cat public/{{item}}.key || true
   register: vpncloud_public_keys
   changed_when: false
 
