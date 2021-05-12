@@ -3,21 +3,23 @@
   become: no
   loop: "{{ groups['all'] }}"
   local_action:
-    module: shell cat public/{{item}}.key
-  when: "'public/{{ item }}.key' is exists"
+    module: shell [ -f public/{{item}}.key ] && cat public/{{item}}.key
   register: vpncloud_public_keys
+  changed_when: false
 
 - name: "Lit clée privée de {{inventory_hostname_short}}"
   become: no
   local_action:
     module: shell cat private/{{inventory_hostname_short}}.key
   register: vpncloud_private_key
+  changed_when: false
 
 - name: "Lit clée publique de {{inventory_hostname_short}}"
   become: no
   local_action:
     module: shell cat public/{{inventory_hostname_short}}.key
   register: vpncloud_public_key
+  changed_when: false
 
 - set_fact:
     vpncloud_private_key: "{{ vpncloud_private_key.stdout }}"
@@ -32,11 +34,13 @@
   template:
     src: drave.net.j2
     dest: /etc/vpncloud/drave.net
+  register: vpncloud_drave_net
 
 - systemd:
     name: vpncloud@drave
     state: restarted
     enabled: yes
+  when: vpncloud_drave_net.changed
 
 - name: Configure le pare-feu
   community.general.ufw:
