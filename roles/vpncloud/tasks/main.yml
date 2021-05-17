@@ -3,15 +3,18 @@
   copy:
     content: "deb https://repo.ddswd.de/deb stable main"
     dest: /etc/apt/sources.list.d/vpncloud.list
+  register: vpncloud_repo
 
 - name: Ajoute la clef gpg pour vpncloud au trousseau de Apt
   ansible.builtin.apt_key:
     url: https://repo.ddswd.de/deb/public.key
     state: present
+  when: vpncloud_repo.changed
 
 - name: Met à jour les packages
   apt:
     update_cache: true
+  when: vpncloud_repo.changed
 
 - name: installe vpncloud
   apt:
