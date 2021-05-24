@@ -58,3 +58,19 @@
       tags: always
       vars:
         node: "{{ inventory_hostname }}"
+
+    - name: MAJ fichier /etc/hosts
+      include_role:
+        name: hosts
+        apply:
+          tags: hosts
+      tags: always
+      vars:
+        node: "{{ inventory_hostname }}"
+
+    # - name: Test l'installation
+    #   include_role:
+    #     name: test
+    #     apply:
+    #       tags: test
+    #   tags: always
