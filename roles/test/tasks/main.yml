@@ -1,0 +1,13 @@
+---
+- command: "systemctl is-active {{item}}"
+  loop:
+    - snap.microk8s.daemon-apiserver-kicker.service
+    - snap.microk8s.daemon-apiserver.service
+    - snap.microk8s.daemon-cluster-agent.service
+    - snap.microk8s.daemon-containerd.service
+    - snap.microk8s.daemon-control-plane-kicker.service
+    - snap.microk8s.daemon-controller-manager.service
+    - snap.microk8s.daemon-kubelet.service
+    - snap.microk8s.daemon-proxy.service
+    - snap.microk8s.daemon-scheduler.service
+    - vpncloud@drave.service

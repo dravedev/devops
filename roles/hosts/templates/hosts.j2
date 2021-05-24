@@ -1,0 +1,4 @@
+{% for node in groups['all'] %}
+{% set short_name = hostvars[node]['domain'].split('.')[0] %}
+{{ hostvars[node]['private_ip'] }}  {{ short_name }}
+{% endfor %}
