@@ -1,0 +1,4 @@
+---
+- name: installe snap microk8s
+  snap:
+    name: microk8s

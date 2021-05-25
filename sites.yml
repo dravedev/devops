@@ -68,6 +68,15 @@
       vars:
         node: "{{ inventory_hostname }}"
 
+    - name: installe microk8s
+      include_role:
+        name: microk8s
+        apply:
+          tags: microk8s
+      tags: always
+      vars:
+        node: "{{ inventory_hostname }}"
+
     # - name: Test l'installation
     #   include_role:
     #     name: test
