@@ -119,6 +119,8 @@ une fois encryptée, tu peux éditer avec:
 
     ansible-vault edit ./vault/$NOM_NODE.yml
 
+Par défaut, la configuration défault de Ansible (ansible.cfg) lit de ./.vault_password, un fichier qui est à créer. Ce fichier doit contenir le mot de passe choisi ci-haut pour encrypter le vault. Ce fichier est exclu du git par .gitignore et ne devrait donc exister que localement sur votre machine.
+
 ## accès à la node
 
 Tu peux créer le nom correspondant dans ton fichier de configuration ssh (`~/.ssh/config`):
@@ -152,6 +154,7 @@ D'autres options sont disponibles pour effacer des usagers ajoutés accidentelle
     ansible-playbook setup.yml -e user=DRAVEUR_NAME -e delusers=OLDUSER1,OLDUSER2 --ask-become-pass
 
 ## Installation
+
 
 Lancer le playbook pour configurer vos nodes et les joindre au réseau vpncloud de Drave Développement:
 
