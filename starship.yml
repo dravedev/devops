@@ -5,7 +5,7 @@
   hosts: all
   tags:
     - starship
-  become: "True"
+  become: 'True'
   tasks:
     - name: Vérification si starship est déjà installé
       stat:
