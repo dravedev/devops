@@ -3,3 +3,95 @@
   snap:
     name: microk8s
     classic: yes
+    channel: "1.21"
+
+- name: Microk8s status
+  shell: source /etc/profile.d/apps-bin-path.sh && microk8s.status --wait-ready
+  register: status_output
+  failed_when: "'microk8s is running' is not in status_output.stdout"
+  changed_when: false
+  args:
+    executable: /bin/bash
+  tags: [ha,join-node]
+
+- name: high-availability
+  set_fact:
+    high_availability: "{{'high-availability: yes' in status_output.stdout}}"
+  tags: [ha,join-node]
+
+- name: ajoute tous les draveurs comme administrateurs de microk8s
+  ansible.builtin.user:
+    name: "{{username}}"
+    groups: microk8s
+    append: yes
+  vars:
+    username: "{{ item }}"
+  loop: "{{ draveurs }}"
+
+# extrait de:
+# https://github.com/accanto-systems/ansible-role-microk8s/blob/master/tasks/install.yml
+- name: Alias kubectl
+  shell: "source /etc/profile.d/apps-bin-path.sh && snap alias microk8s.kubectl kubectl"
+  register: output
+  changed_when: "'added' in output.stdout"
+  args:
+    executable: /bin/bash
+
+- name: Enable dns
+  shell: "source /etc/profile.d/apps-bin-path.sh && microk8s.enable dns"
+  register: output
+  changed_when: "'is already enabled' not in output.stdout"
+  args:
+    executable: /bin/bash
+
+- name: Enable ingress
+  shell: "source /etc/profile.d/apps-bin-path.sh && microk8s.enable ingress"
+  register: output
+  changed_when: "'is already enabled' not in output.stdout"
+  args:
+    executable: /bin/bash
+
+- name: Enable storage
+  shell: "source /etc/profile.d/apps-bin-path.sh && microk8s.enable storage"
+  register: output
+  changed_when: "'is already enabled' not in output.stdout"
+  args:
+    executable: /bin/bash
+
+- name: Enable K8s Dashboard
+  shell: "source /etc/profile.d/apps-bin-path.sh && /snap/bin/microk8s.enable dashboard"
+  register: output
+  changed_when: "'is already enabled' not in output.stdout"
+  when: k8s_dashboard|default(False)|bool == True
+  args:
+    executable: /bin/bash
+
+- name: itere pour voir quelle node existante a une grappe à rejoindre
+  become: no
+  command:
+    "ssh -o StrictHostKeyChecking=no {{master}} 'microk8s add-node'"
+  register: output
+  #when: not high_availability
+  vars:
+    master: "{{ (groups['all'] | difference([ansible_hostname]) | shuffle)[0] }}"
+  failed_when: "'run the following' not in output.stdout"
+  changed_when: false
+  tags: [ha,join-node]
+
+- name: join_command
+  set_fact:
+    join_command: "{{output.stdout_lines[-1]}}"
+  tags: [ha,join-node]
+
+- name: debug
+  debug:
+    msg: "{{join_command}}"
+  tags: [ha,join-node]
+
+- name: execute join command
+  # when: not high_availability
+  register: output
+  changed_when: "'already known to dqlite' not in output.stdout"
+  failed_when: output.rc != 6 and output.rc != 0
+  command: "{{join_command}}"
+  tags: [ha,join-node]
