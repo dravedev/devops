@@ -4,7 +4,7 @@
 - name: Installation de starship
   hosts: cribe # À modifier...
   tags:
-    - starship
+    - installestarship
   become: 'True'
   tasks:
     - name: Téléchargement du script d'installation de starship
@@ -33,3 +33,24 @@
       ansible.builtin.copy:
         src: ./files/.config/ # À vous de créer le fichier starship.toml dans ce répertoire (notez que files est dans .gitignore)
         dest: /etc/skel/.config/
+
+- name: Configuration de starship pour l'utilisateur courrant
+  hosts: cribe # À modifier...
+  tags:
+    - configurestarship
+  tasks:
+    - name: Vérification si starship est installé
+      stat:
+        path: /usr/local/bin/starship
+      register: present
+    - name: Vérification (et modification si nécessaire) du fichier /home/{{ owner }}/.bashrc
+      lineinfile:
+        dest: /home/{{ owner }}/.bashrc
+        line: eval "$(starship init bash)"
+        state: present
+      when: present.stat.exists
+    - name: Copie du fichier /home/{{ owner }}/.config/starship.toml
+      ansible.builtin.copy:
+        src: ./files/.config/ # À vous de créer le fichier starship.toml dans ce répertoire (notez que files est dans .gitignore)
+        dest: home/{{ owner }}/.config/
+      when: present.stat.exists
