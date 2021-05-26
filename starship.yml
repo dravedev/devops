@@ -31,5 +31,5 @@
         state: present
     - name: Copie du répertoire /etc/skel/.config/
       ansible.builtin.copy:
-        src: ./files/.config/ # À vous de créer ce fichier (.gitignore)
+        src: ./files/.config/ # À vous de créer le fichier starship.toml dans ce répertoire (notez que files est dans .gitignore)
         dest: /etc/skel/.config/
