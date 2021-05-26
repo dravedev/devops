@@ -1,0 +1,27 @@
+- name: itere pour voir quelle node existante a une grappe à rejoindre
+  become: no
+  command:
+    "ssh -o StrictHostKeyChecking=no {{master}} 'microk8s add-node'"
+  register: output
+  vars:
+    master: "{{ (groups['all'] | difference([ansible_hostname]) | shuffle)[0] }}"
+  failed_when: "'run the following' not in output.stdout"
+  changed_when: false
+  tags: [ha,join-node]
+
+- name: join_command
+  set_fact:
+    join_command: "{{output.stdout_lines[-1]}}"
+  tags: [ha,join-node]
+
+- name: debug
+  debug:
+    msg: "{{join_command}}"
+  tags: [ha,join-node]
+
+- name: exécution de la commande pour joindre la grappe (peut prendre 2mn+)
+  register: output
+  changed_when: "'already known to dqlite' not in output.stdout"
+  failed_when: output.rc != 6 and output.rc != 0
+  command: "{{join_command}}"
+  tags: [ha,join-node]

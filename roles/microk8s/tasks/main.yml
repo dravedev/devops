@@ -12,12 +12,6 @@
   changed_when: false
   args:
     executable: /bin/bash
-  tags: [ha,join-node]
-
-- name: high-availability
-  set_fact:
-    high_availability: "{{'high-availability: yes' in status_output.stdout}}"
-  tags: [ha,join-node]
 
 - name: ajoute tous les draveurs comme administrateurs de microk8s
   ansible.builtin.user:
@@ -65,33 +59,3 @@
   when: k8s_dashboard|default(False)|bool == True
   args:
     executable: /bin/bash
-
-- name: itere pour voir quelle node existante a une grappe à rejoindre
-  become: no
-  command:
-    "ssh -o StrictHostKeyChecking=no {{master}} 'microk8s add-node'"
-  register: output
-  #when: not high_availability
-  vars:
-    master: "{{ (groups['all'] | difference([ansible_hostname]) | shuffle)[0] }}"
-  failed_when: "'run the following' not in output.stdout"
-  changed_when: false
-  tags: [ha,join-node]
-
-- name: join_command
-  set_fact:
-    join_command: "{{output.stdout_lines[-1]}}"
-  tags: [ha,join-node]
-
-- name: debug
-  debug:
-    msg: "{{join_command}}"
-  tags: [ha,join-node]
-
-- name: execute join command
-  # when: not high_availability
-  register: output
-  changed_when: "'already known to dqlite' not in output.stdout"
-  failed_when: output.rc != 6 and output.rc != 0
-  command: "{{join_command}}"
-  tags: [ha,join-node]
