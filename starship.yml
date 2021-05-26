@@ -52,5 +52,5 @@
     - name: Copie du fichier /home/{{ owner }}/.config/starship.toml
       ansible.builtin.copy:
         src: ./files/.config/ # À vous de créer le fichier starship.toml dans ce répertoire (notez que files est dans .gitignore)
-        dest: home/{{ owner }}/.config/
+        dest: /home/{{ owner }}/.config/
       when: present.stat.exists
