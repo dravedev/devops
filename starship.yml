@@ -2,7 +2,7 @@
 # Voir:  https://starship.rs/fr-FR/config/
 
 - name: Installation de starship
-  hosts: all
+  hosts: cribe # À modifier...
   tags:
     - starship
   become: 'True'
@@ -31,5 +31,5 @@
         state: present
     - name: Copie du répertoire /etc/skel/.config/
       ansible.builtin.copy:
-        src: ./files/.config/
+        src: ./files/.config/ # À vous de créer ce fichier (.gitignore)
         dest: /etc/skel/.config/
