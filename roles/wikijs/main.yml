@@ -1,0 +1,14 @@
+
+# TODO: check if wikijs is already installed
+
+- name: Add k8s-at-home helm repo
+  shell: microk8s helm3 repo add k8s-at-home https://k8s-at-home.com/charts/
+
+- name: Update helm repos
+  shell: microk8s helm3 repo update
+
+- name: Install wikijs
+  shell: microk8s helm3 install wikijs k8s-at-home/wikijs
+
+- name: Expose using Nginx Ingress
+  shell: microk8s kubectl apply -f wiki-ingress.yml
