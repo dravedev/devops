@@ -1,0 +1,24 @@
+---
+# reboot.yml
+# Redémarrage des serveurs le nécessitant.
+- name: Tâche de redémarrage des serveurs le requérant
+  hosts: "{{ owner | default(lookup('env', 'USER')) }}"
+  become: 'True'
+  tasks:
+    - name: Vérifie quels serveur requièrent un redémarrage
+      stat:
+        path: /var/run/reboot-required
+      register: fichier_reboot_required
+    - name: Affiche quels serveurs requière un redémarrage
+      debug:
+        msg: '*** {{ inventory_hostname }} REQUIÈRE UN REDÉMARRAGE POUR APPLIQUER DES MISES À JOUR ***'
+      when: fichier_reboot_required.stat.exists
+    - name: Redémarrage des serveurs le réquérant
+      reboot:
+        msg: Redémarrage...
+        connect_timeout: 5
+        reboot_timeout: 300
+        pre_reboot_delay: 0
+        post_reboot_delay: 30
+        test_command: uptime
+      when: fichier_reboot_required.stat.exists
