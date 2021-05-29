@@ -2,7 +2,7 @@
 # Voir:  https://starship.rs/fr-FR/config/
 
 - name: Installation de starship
-  hosts: cribe # À modifier...
+  hosts: "{{ owner | default(lookup('env', 'USER')) }}"
   tags:
     - installestarship
   become: 'True'
@@ -35,7 +35,7 @@
         dest: /etc/skel/.config/
 
 - name: Configuration de starship pour l'utilisateur courrant
-  hosts: cribe # À modifier...
+  hosts: "{{ owner | default(lookup('env', 'USER')) }}"
   tags:
     - configurestarship
   tasks:
