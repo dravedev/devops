@@ -6,8 +6,6 @@ https://domains.google.com/registrar/drave.dev/dns
 
 créer un enregistrement synthétique
 
-https://github.com/ddclient/ddclient
-
 sudo snap install inadyn
 
 https://docs.ansible.com/ansible/latest/user_guide/vault.html

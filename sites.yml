@@ -65,8 +65,28 @@
         apply:
           tags: hosts
       tags: always
-      vars:
-        node: "{{ inventory_hostname }}"
+
+    - name: installe microk8s
+      include_role:
+        name: microk8s
+        apply:
+          tags: microk8s
+      tags: always
+
+    - name: ajoute fait
+      include_role:
+        name: microk8s_facts
+        apply:
+          tags: grappe
+      tags: always
+
+    - name: joint à la grappe
+      when: not clustered
+      include_role:
+        name: grappe
+        apply:
+          tags: grappe
+      tags: always
 
     # - name: Test l'installation
     #   include_role:

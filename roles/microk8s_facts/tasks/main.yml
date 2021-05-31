@@ -1,0 +1,20 @@
+# - name: Microk8s status
+#   shell: source /etc/profile.d/apps-bin-path.sh && microk8s.status --wait-ready
+#   register: status_output
+#   failed_when: "'microk8s is running' is not in status_output.stdout"
+#   changed_when: false
+#   args:
+#     executable: /bin/bash
+
+# - name: high-availability
+#   set_fact:
+#     high_availability: "{{'high-availability: yes' in status_output.stdout}}"
+
+- name: microk8s get nodes
+  shell: microk8s kubectl get nodes
+  register: get_nodes_output
+  changed_when: false
+
+- name: set_fact clustered
+  set_fact:
+    clustered: "{{(get_nodes_output.stdout_lines | length) > 2}}"
