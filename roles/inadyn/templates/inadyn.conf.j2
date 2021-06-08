@@ -1,5 +1,5 @@
 provider domains.google.com {
     username={{inadyn.username}}
     password={{inadyn.password}}
-    hostname={{hostvars[ansible_hostname]['domain']}}
+    hostname={{hostvars[inventory_hostname]['domain']}}
 }

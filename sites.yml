@@ -81,7 +81,7 @@
       tags: always
 
     - name: joint à la grappe
-      when: not clustered
+      when: clustered is defined and not clustered
       include_role:
         name: grappe
         apply:
