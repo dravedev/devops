@@ -1,7 +1,4 @@
 ---
-roles:
-- src: thorian93.ansible_role_fail2ban
-
 collections:
 - name: community.general
 - name: community.kubernetes
