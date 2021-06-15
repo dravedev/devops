@@ -12,19 +12,19 @@ Chaque draveur-e-s est responsable de l'administration de sa propre node mais pe
 
 ce dépôt de sources permet de configurer:
 
-* les secrets liés à une node (seulement connus par le draveur propriétaire de la node)
-* l'accès à la node par les autres draveurs
-* l'endurcissement de la sécurité de la node
-* le lien entre la node, son ip publique et le nom de domaine sur drave.dev
-* la connectivité à d'autres nodes
+- les secrets liés à une node (seulement connus par le draveur propriétaire de la node)
+- l'accès à la node par les autres draveurs
+- l'endurcissement de la sécurité de la node
+- le lien entre la node, son ip publique et le nom de domaine sur drave.dev
+- la connectivité à d'autres nodes
 
 et éventuellement (en cours), le déploiement du logiciel de gestion de grappes (Kubernetes) qui permettra aux draveurs de gérer l'ensemble des nodes comme un infonuage décentralisé.
 
 ## connaissances requises
 
-* familiarité avec l'administration système
-* familiarité avec ansible
-* familiarité avec la réseautique
+- familiarité avec l'administration système
+- familiarité avec ansible
+- familiarité avec la réseautique
 
 Besoin d'aide?
 
@@ -36,37 +36,37 @@ Nous avons des sessions de devops hebdomadaire pour t'aider à faire le déploie
 
 dans le texte, les équivalents français:
 
-* deployment station: lanceur
-* New node: node
+- deployment station: lanceur
+- New node: node
 
 ## Pré-requis
 
-* assure toi d'être dans l'équipe Github: https://github.com/orgs/dravedev/people
-  * nous allons migrer à autre nom système de gestion de sources une fois l'infrastructure déployé
-* choisi le nom de ta node
-  * la convention est un terme terminologique de la drave traditionnelle
-  * http://abcstrategies.com/lexique-draveurs-cageux-bucherons/
-* demande la création de la node comme enregistrement DNS dynamique synthétique sur le domaine drave.dev
-  * un nom d'usager et mot de passe te sera retourné pour configurer ton client DNS dynamique
+- assure toi d'être dans l'équipe Github: https://github.com/orgs/dravedev/people
+  - nous allons migrer à autre nom système de gestion de sources une fois l'infrastructure déployé
+- choisi le nom de ta node
+  - la convention est un terme terminologique de la drave traditionnelle
+  - http://abcstrategies.com/lexique-draveurs-cageux-bucherons/
+- demande la création de la node comme enregistrement DNS dynamique synthétique sur le domaine drave.dev
+  - un nom d'usager et mot de passe te sera retourné pour configurer ton client DNS dynamique
 
 ## configuration de ton environnement de développement sur le lanceur
 
 - assure toi d'avoir sur ta station de travail (le lanceur du script de configuration):
 
-  -  ansible 2.9+
-  -  ta clée ssh privée associée à ta clée publique de ton utilisateur github
+  - ansible 2.9+
+  - ta clée ssh privée associée à ta clée publique de ton utilisateur github
 
 * clone le répository devops
 
-    git@github.com:dravedev/devops.git
+  git@github.com:dravedev/devops.git
 
 * installe les dépendances
 
-    ansible-galaxy install -r requirements.yml
+  ansible-galaxy install -r requirements.yml
 
 ## installation sur la node
 
-* Installe Ubuntu 20.04 sur l'ordinateur que tu veux dédier comme node du réseau drave
+- Installe Ubuntu 20.04 sur l'ordinateur que tu veux dédier comme node du réseau drave
 
 ## configuration des draveurs
 
@@ -76,17 +76,16 @@ Le fichier `draveurs.yml` contient les noms des utilisateurs des personnes qui o
 
 Si ton usager local sur ton lanceur ne correspond pas, tu peux spécifier un usager alternatif en configurant la variable `owner` passée à Ansible.
 
-* modifie inventory.yml pour ajouter ta node sous `all:hosts`:
+- modifie inventory.yml pour ajouter ta node sous `all:hosts`:
 
-     <NOM_NODE>:
+  <NOM_NODE>:
 
-* ajoute ton nom d'usager dans `children` avec ta (ou tes) node(s) définies dans `all:hosts`:
+- ajoute ton nom d'usager dans `children` avec ta (ou tes) node(s) définies dans `all:hosts`:
 
   children:
-    <NOM_USAGER_NODE>:
-      hosts:
-        <NOM_NODE>:
-
+  <NOM_USAGER_NODE>:
+  hosts:
+  <NOM_NODE>:
 
 ## configuration des variables propres à ta node
 
@@ -105,7 +104,7 @@ configure les valeurs des variables spécifique à ta node
         username: "{{ vault_inadyn_username }}"
         password: "{{ vault_inadyn_password }}"
 
-configure les secrets dans ```./vault/$NOM_NODE.yml```
+configure les secrets dans `./vault/$NOM_NODE.yml`
 
     ---
     vault_inadyn_username: <NOM_USAGER_DNS_DYNAMIQUE>
@@ -129,6 +128,8 @@ Tu peux créer le nom correspondant dans ton fichier de configuration ssh (`~/.s
         HostName <IP_NODE>
         User <NOM_USAGER_NODE>
         ForwardAgent yes
+        AddKeysToAgent yes
+
 
 ALTERNATIVEMENT
 
@@ -139,7 +140,6 @@ Si le nom réseau de la node ou l'IP différe sur le réseau local du nom de la 
 Si le nom d'usager sur la node différe de ton nom actuel, tu peux modifier avec ansible_user:
 
     -e ansible_user=<NOM_USAGER_NODE>
-
 
 ## Initialisation usager ansible (une seule fois, possiblement optionnel)
 
@@ -154,7 +154,6 @@ D'autres options sont disponibles pour effacer des usagers ajoutés accidentelle
     ansible-playbook setup.yml -e user=DRAVEUR_NAME -e delusers=OLDUSER1,OLDUSER2 --ask-become-pass
 
 ## Installation
-
 
 Lancer le playbook pour configurer vos nodes et les joindre au réseau vpncloud de Drave Développement:
 
@@ -175,7 +174,6 @@ Voir
     /var/log/vpncloud-drave.stats
     /var/log/vpncloud-drave.log
 
-
 ## Connecte toi à une autre node par ssh
 
 démarre ssh-agent:
@@ -194,13 +192,13 @@ et ensuite, sur ta node, connecte toi à d'autres node du vpncloud
 
 Si il s'agit d'une nouvelle node, tu as ajouté des information au code. Pour les partager:
 
-* Crée une nouvelle branche
-* Commit tes changements localement
-* Pousse ta branche à Github
-* Crée un pull request sur Github
-* informe le groupe de ton nouveau serveur
+- Crée une nouvelle branche
+- Commit tes changements localement
+- Pousse ta branche à Github
+- Crée un pull request sur Github
+- informe le groupe de ton nouveau serveur
 
 # Contribution
 
-* Rejoins la discussion dans le salon de discussion RocketChat: https://rocketchat.drave.quebec/channel/devops
-* Sélectionne un problème à résoudre: https://github.com/dravedev/devops/issues
+- Rejoins la discussion dans le salon de discussion RocketChat: https://rocketchat.drave.quebec/channel/devops
+- Sélectionne un problème à résoudre: https://github.com/dravedev/devops/issues
