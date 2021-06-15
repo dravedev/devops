@@ -15,6 +15,14 @@
   register: get_nodes_output
   changed_when: false
 
+- name: debug value 
+  debug:
+    msg: "{{get_nodes_output}}"
+
 - name: set_fact clustered
   set_fact:
     clustered: "{{(get_nodes_output.stdout_lines | length) > 2}}"
+
+- name: debug value
+  debug:
+    msg: "clustered={{clustered}}"
