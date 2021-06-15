@@ -1,13 +1,15 @@
-- name: itere pour voir quelle node existante a une grappe à rejoindre
+- name: choisi une node au hasard pour obtenir la ligne de commande pour joindre la grappe
   become: no
   command:
-    "ssh -o StrictHostKeyChecking=no {{master}} 'microk8s add-node'"
+    "ssh -o ConnectTimeout=3 -o StrictHostKeyChecking=no {{master}} 'microk8s add-node'"
   register: output
   vars:
-    master: "{{ (groups['all'] | difference([ansible_hostname]) | shuffle)[0] }}"
+    master: "{{ (groups['all'] | difference([inventory_hostname_short]) | random) }}"
+  retries: 3
+  until: output.rc == 0
   failed_when: "'run the following' not in output.stdout"
   changed_when: false
-  tags: [ha,join-node]
+  tags: [ha,join-node,add-node]
 
 - name: join_command
   set_fact:
