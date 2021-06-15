@@ -3,7 +3,7 @@
   snap:
     name: microk8s
     classic: yes
-    channel: "1.21"
+    channel: '1.21'
 
 - name: Microk8s status
   shell: source /etc/profile.d/apps-bin-path.sh && microk8s.status --wait-ready
@@ -15,47 +15,59 @@
 
 - name: ajoute tous les draveurs comme administrateurs de microk8s
   ansible.builtin.user:
-    name: "{{username}}"
+    name: '{{username}}'
     groups: microk8s
     append: yes
   vars:
-    username: "{{ item }}"
-  loop: "{{ draveurs }}"
+    username: '{{ item }}'
+  loop: '{{ draveurs }}'
 
 # extrait de:
 # https://github.com/accanto-systems/ansible-role-microk8s/blob/master/tasks/install.yml
 - name: Alias kubectl
-  shell: "source /etc/profile.d/apps-bin-path.sh && snap alias microk8s.kubectl kubectl"
+  shell: 'source /etc/profile.d/apps-bin-path.sh && snap alias microk8s.kubectl kubectl'
   register: output
   changed_when: "'added' in output.stdout"
   args:
     executable: /bin/bash
 
 - name: Enable dns
-  shell: "source /etc/profile.d/apps-bin-path.sh && microk8s.enable dns"
+  shell: 'microk8s.enable dns'
   register: output
   changed_when: "'is already enabled' not in output.stdout"
+  environment:
+    LC_ALL: C.UTF-8
+    LANG: C.UTF-8
   args:
     executable: /bin/bash
 
 - name: Enable ingress
-  shell: "source /etc/profile.d/apps-bin-path.sh && microk8s.enable ingress"
+  shell: 'source /etc/profile.d/apps-bin-path.sh && microk8s.enable ingress'
   register: output
   changed_when: "'is already enabled' not in output.stdout"
+  environment:
+    LC_ALL: C.UTF-8
+    LANG: C.UTF-8
   args:
     executable: /bin/bash
 
 - name: Enable storage
-  shell: "source /etc/profile.d/apps-bin-path.sh && microk8s.enable storage"
+  shell: 'source /etc/profile.d/apps-bin-path.sh && microk8s.enable storage'
   register: output
   changed_when: "'is already enabled' not in output.stdout"
+  environment:
+    LC_ALL: C.UTF-8
+    LANG: C.UTF-8
   args:
     executable: /bin/bash
 
 - name: Enable K8s Dashboard
-  shell: "source /etc/profile.d/apps-bin-path.sh && /snap/bin/microk8s.enable dashboard"
+  shell: 'source /etc/profile.d/apps-bin-path.sh && /snap/bin/microk8s.enable dashboard'
   register: output
   changed_when: "'is already enabled' not in output.stdout"
   when: k8s_dashboard|default(False)|bool == True
+  environment:
+    LC_ALL: C.UTF-8
+    LANG: C.UTF-8
   args:
     executable: /bin/bash

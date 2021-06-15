@@ -1,23 +1,22 @@
 - hosts: "{{ owner | default(lookup('env', 'USER')) }}"
   name: Assure la configuration de base
   become: true
-  gather_facts: true
+  gather_facts: false
   vars_files:
     - draveurs.yml
 
   tasks:
-
     - name: inclusion secrets
       include_vars:
-        file: "vault/{{inventory_hostname_short}}.yml"
+        file: 'vault/{{inventory_hostname_short}}.yml'
       tags: always
 
-    - name: "Chaque draveur administre le système"
+    - name: 'Chaque draveur administre le système'
       include_role:
         name: draveurs
       vars:
-        username: "{{ item }}"
-      loop: "{{ draveurs }}"
+        username: '{{ item }}'
+      loop: '{{ draveurs }}'
       tags:
         - users
 
@@ -57,7 +56,7 @@
           tags: reseau_drave
       tags: always
       vars:
-        node: "{{ inventory_hostname }}"
+        node: '{{ inventory_hostname }}'
 
     - name: MAJ fichier /etc/hosts
       include_role:
