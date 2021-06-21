@@ -5,14 +5,6 @@
     classic: yes
     channel: '1.21'
 
-- name: Microk8s status
-  shell: source /etc/profile.d/apps-bin-path.sh && microk8s.status --wait-ready
-  register: status_output
-  failed_when: "'microk8s is running' is not in status_output.stdout"
-  changed_when: false
-  args:
-    executable: /bin/bash
-
 - name: ajoute tous les draveurs comme administrateurs de microk8s
   ansible.builtin.user:
     name: '{{username}}'
@@ -21,6 +13,27 @@
   vars:
     username: '{{ item }}'
   loop: '{{ draveurs }}'
+
+# - name: checking service status
+#   command: systemctl status "{{ item }}"
+#   with_items:
+#     - snap.microk8s.daemon-containerd
+#     - snap.microk8s.daemon-controller-manager
+#     - snap.microk8s.daemon-etcd
+#     - snap.microk8s.daemon-flanneld
+#     - snap.microk8s.daemon-kubelet
+#     - snap.microk8s.daemon-proxy
+#     - snap.microk8s.daemon-scheduler
+#   register: result
+#   tags: microk8s-status
+
+- name: Microk8s status
+  shell: source /etc/profile.d/apps-bin-path.sh && microk8s.status --wait-ready
+  register: status_output
+  failed_when: "'microk8s is running' is not in status_output.stdout"
+  changed_when: false
+  args:
+    executable: /bin/bash
 
 # extrait de:
 # https://github.com/accanto-systems/ansible-role-microk8s/blob/master/tasks/install.yml
