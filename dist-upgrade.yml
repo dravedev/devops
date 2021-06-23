@@ -1,0 +1,20 @@
+---
+# dist-upgrade.yml
+# Mise à jour de la distribution via apt (apt dist-upgrade) et affichage des serveurs requièrent un redémarrage
+- name: Mise à jour via apt dist-upgrade
+  hosts: "{{ owner | default(lookup('env', 'USER')) }}"
+  become: 'True'
+  tasks:
+    - name: apt update et apt upgrade dist
+      apt:
+        update_cache: 'True'
+        cache_valid_time: 3600
+        upgrade: dist
+    - name: Vérifie si des serveur requièrent un redémarrage
+      stat:
+        path: /var/run/reboot-required
+      register: fichier_reboot_required
+    - name: Affiche quels serveurs requière un redémarrage
+      debug:
+        msg: '*** {{ inventory_hostname }} REQUIÈRE UN REDÉMARRAGE POUR APPLIQUER DES MISES À JOUR ***'
+      when: fichier_reboot_required.stat.exists
