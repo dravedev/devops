@@ -5,6 +5,7 @@ all:
     cribe:
     ours:
     glane:
+    scierie:
   children:
     rngadam:
       hosts:
@@ -21,3 +22,6 @@ all:
     Revixa1:
       hosts:
         glane:
+    mathieugp:
+      hosts:
+        scierie:

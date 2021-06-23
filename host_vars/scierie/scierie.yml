@@ -1,0 +1,6 @@
+domain: scierie.drave.dev
+private_ip: 10.0.0.79
+dyndns: true
+inadyn:
+    username: "{{ vault_inadyn_username }}"
+    password: "{{ vault_inadyn_password }}"
